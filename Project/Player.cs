@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,10 @@ namespace Project
 {
     public class Player : Thing
     {
-        //int health; 
+        int health;
         int frames = 0;
         double totalElapsed;
         double jumpStartTime;
-        Game Game;
         bool isjumping = false;
         const int gravity = 2;
         Vector2 velocity = Vector2.Zero;
@@ -24,29 +24,33 @@ namespace Project
         bool unpausing = false;
         public bool Controller;
         SpriteFont font;
-        int score;
-        private bool starcollide = false;
-        private int StarCol;
+        public int score;
+        private bool fishcollide = false;
+        private int fishCol;
+        Thing Collider;
+        Vector2 CENTRE = new Vector2(Game.WIDTH / 2 - 14, Game.HEIGHT / 2 - 20);
+        string debug;
 
 
-        public Player(Texture2D _texture, Vector2 _position, Rectangle _boundingBox, Game _game, SpriteFont _font) : base(_texture, _position, _boundingBox)
+        public Player(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox, SpriteFont _font) : base(game, _texture, _position, _boundingBox)
         {
-            //health = 100; 
-            Game = _game;
+            health = 4;
             Game.paused = false;
+            Game.restart = true;
             score = 0;
             font = _font;
         }
 
-        public virtual void Update(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            
-            if (!Game.paused)
+
+            if (!Game.paused && !Game.dead && !Game.Win)
             {
                 // Handle timing issues
                 float elapsed = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 totalElapsed += elapsed;
                 long delay = (long)totalElapsed / 80;
+                debug = "";
 
                 int heightOverFloor = GetHeightOverFloor(Game);
                 frames = 6;
@@ -61,15 +65,17 @@ namespace Project
                 bool jump = (Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(0).IsButtonDown(Buttons.A)) && heightOverFloor == 0;
                 bool falling = !isjumping && heightOverFloor > 0;
                 bool sliding = (Keyboard.GetState().IsKeyDown(Keys.LeftShift) || GamePad.GetState(0).IsButtonDown(Buttons.LeftTrigger)) && heightOverFloor == 0;
+
                 if (jump)
                 {
                     isjumping = true;
                     jumpStartTime = totalElapsed;
                 }
-                else if (isjumping && jumpStartTime + 500 < totalElapsed)
+                else if (isjumping && jumpStartTime + 700 < totalElapsed)
                 {
                     isjumping = false;
                 }
+
 
                 // Determine horizontal speed modifier
                 int div = 7;
@@ -77,6 +83,7 @@ namespace Project
                 {
                     div = 4;
                 }
+
 
                 // Vertical movement (ignores frames)
                 if (falling)
@@ -90,13 +97,14 @@ namespace Project
                 if (isjumping)
                 {
                     double jumpTime = totalElapsed - jumpStartTime;
-                    int inc = (int)(elapsed * 20 / (jumpTime + 10));
+                    int inc = (int)(elapsed * 30 / (jumpTime + 10));
                     BigBoundingBox.Y -= inc;
                     Position.Y -= inc;
                 }
 
                 if (dir != 0)
                 {
+                    debug += " dir=" + dir;
                     // Select the frame
                     int frameStart = dir == -1 ? 3 : 7;
 
@@ -113,7 +121,9 @@ namespace Project
                     int inc = (int)elapsed / div * dir;
                     // Dip a toe in
                     BigBoundingBox.X += inc;
-                    if (this.IsCollidingBlock(Game))
+
+                    Collider = this.IsColliding(Game);
+                    if (Collider is Block)
                     {
                         // Hit something, so undo the change and stop
                         BigBoundingBox.X -= inc;
@@ -122,25 +132,32 @@ namespace Project
                     {
                         Position.X += inc;
                         delay = (long)totalElapsed / 80;
-                    }                    
+                    }
                 }
 
-                if (this.IsCollidingStar(Game, ref StarCol))
+                if (Collider == null)
                 {
-                    score++;
-                    starcollide = true;
+                    // Only needed if fishes move
+                    Collider = this.IsColliding(Game);
                 }
-                else
+
+                if (Collider != null)
                 {
-                    starcollide = false;
+                    Collider.Collision(this);
                 }
-                
+
+                if (Collider != null) debug += " hit=" + Collider.GetType();
+
                 // Now draw it
                 sourceRect = new Rectangle(42 * frames, 0, 42, 60);
             }
-            spriteBatch.Draw(Texture, Position, sourceRect, Color.White);
+            Game.Offset = this.Position - CENTRE;
+            spriteBatch.Draw(Texture, CENTRE, sourceRect, Color.White);
             spriteBatch.DrawString(font, "SCORE:  " + score, new Vector2(100, 700), Color.White);
-                        
+            spriteBatch.DrawString(font, "HEALTH:  " + health, new Vector2(1200, 700), Color.White);
+            spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
+
+
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) || GamePad.GetState(0).IsButtonDown(Buttons.Start))
             {
@@ -151,9 +168,9 @@ namespace Project
                     Controller = false;
             }
             else if (pausing)
-            {                
+            {
                 Game.paused = true;
-                pausing = false;                
+                pausing = false;
             }
 
             if (!pausing && Game.paused)
@@ -167,24 +184,23 @@ namespace Project
                     Game.paused = false;
                     unpausing = false;
                 }
+
             }
 
-
-        }
-
-        public int GetStarnum
-        {
-            get
+            if (Position.Y >= 810)
             {
-                if (starcollide == true)
-                {
-                    return StarCol;
-                }
-                else
-                {
-                    return -1;
-                }
+                health = 0;
             }
+
+            if (health == 0)
+            {
+                Game.dead = true;
+            }
+            if (score >= 10)
+            {
+                Game.Win = true;
+            }
+
         }
     }
 }

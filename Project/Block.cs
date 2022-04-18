@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Project
 
         protected Texture2D texture;
         private Rectangle rectangle;
+
         public Rectangle Rectangle
         {
             get
@@ -27,29 +29,47 @@ namespace Project
                 rectangle = value;
             }
         }
-        public Block(Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(_texture, _position, _boundingBox)
+        public Block(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
         {
         }
 
-        public virtual void Update(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, LittleBoundingBox, Color.White);
+            spriteBatch.Draw(Texture, Position - Game.Offset, LittleBoundingBox, Color.White);
         }
 
-        private static ContentManager content;
-        public static ContentManager Content
+
+        public override int GetHeightOver(Thing otherThing)
         {
-            protected get
-            {
-                return content;
-            }
-            set
-            {
-                content = value;
-            }
+            /*    // Is this under the other? If not, return -1
+                if (BigBoundingBox.Left > otherThing.BigBoundingBox.Right - 5)
+                    return 9999;
+                if (BigBoundingBox.Right < otherThing.BigBoundingBox.Left + 5)
+                    return 9999;
+                // +5/-5 to stop sticking to walls when falling*/
+
+            // Is this under the other? If not, return -1
+            if (BigBoundingBox.Left > otherThing.BigBoundingBox.Right)
+                return 9999;
+            if (BigBoundingBox.Right < otherThing.BigBoundingBox.Left)
+                return 9999;
+            // +5/-5 to stop sticking to walls when falling
+
+            // Is this over (or overlapping) the other? If so, return -1
+            if (BigBoundingBox.Bottom <= otherThing.BigBoundingBox.Top - 5)
+                return 9999;
+            if (BigBoundingBox.Top >= otherThing.BigBoundingBox.Bottom)
+                return BigBoundingBox.Top - otherThing.BigBoundingBox.Bottom;
+
+            return 9999;
         }
     }
 }
+
+
+
+
+
 
 
 
