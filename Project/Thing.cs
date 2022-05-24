@@ -32,9 +32,15 @@ namespace Project
         {
             foreach (var Thing in Game.Things)
             {
-                if (this.IsColliding(Thing))
+                if (Thing is Background)
                 {
-                    return Thing;
+                }
+                else
+                {
+                    if (this.IsColliding(Thing))
+                    {
+                        return Thing;
+                    }
                 }
             }
             return null;
@@ -63,6 +69,11 @@ namespace Project
             return 9999;
         }
 
+        public virtual double IsInRange(Thing otherThing)
+        {
+            return 9999;
+        }
+
         public int GetHeightOverFloor(Game game)
         {
             int result = 9999;
@@ -81,5 +92,7 @@ namespace Project
         public virtual void Update(GameTime gameTime, SpriteBatch spriteBatch)
         {
         }
+
+        
     }
 }

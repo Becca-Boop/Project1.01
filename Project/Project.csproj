@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Background.cs" />
     <Compile Include="Block.cs" />
     <Compile Include="Fish.cs" />
     <Compile Include="Game.cs" />

@@ -13,11 +13,13 @@ namespace Project
 {
     public class Player : Thing
     {
-        int health;
+        public int health;
         int frames = 0;
         double totalElapsed;
-        double jumpStartTime;
+        double jumpStartTime = 0;
         bool isjumping = false;
+        bool slidejump = false;
+        public bool IsSliding = false;
         const int gravity = 2;
         Vector2 velocity = Vector2.Zero;
         bool pausing = false;
@@ -25,8 +27,9 @@ namespace Project
         public bool Controller;
         SpriteFont font;
         public int score;
-        private bool fishcollide = false;
-        private int fishCol;
+        Vector2 Length = new Vector2(0,0);
+        int count = 0;
+
         Thing Collider;
         Vector2 CENTRE = new Vector2(Game.WIDTH / 2 - 14, Game.HEIGHT / 2 - 20);
         string debug;
@@ -44,7 +47,101 @@ namespace Project
         public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
         {
 
-            if (!Game.paused && !Game.dead && !Game.Win)
+            if (!Game.paused && !Game.dead && !Game.Win && Game.level == 4)
+            {
+                // Handle timing issues
+                float elapsed = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                totalElapsed += elapsed;
+                long delay = (long)totalElapsed / 80;
+                debug = "";
+
+                int heightOverFloor = GetHeightOverFloor(Game);
+                frames = 6;
+
+                // What does the player want to do?
+                int dir = 0;
+                Vector2 leftthumbstick = GamePad.GetState(0).ThumbSticks.Left;
+
+
+                if (Keyboard.GetState().IsKeyDown(Keys.A) || leftthumbstick.X < 0) dir--;
+                if (Keyboard.GetState().IsKeyDown(Keys.D) || leftthumbstick.X > 0) dir++;
+                bool jump = ((Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(0).IsButtonDown(Buttons.A)) && (jumpStartTime + 500) < totalElapsed);
+                bool falling = !isjumping && heightOverFloor > 0;
+
+                if (jump)
+                {
+                    isjumping = true;
+                    jumpStartTime = totalElapsed;
+                }
+                else if (isjumping && jumpStartTime + 200 < totalElapsed)
+                {
+                    isjumping = false;
+                }
+
+                
+                // Determine horizontal speed modifier
+                int div = 7;                              
+                            
+
+
+                // Vertical movement (ignores frames)
+                if (falling)
+                {
+                    int inc = (int)elapsed / 10;
+                    // Fall no further than floor
+                    if (inc > heightOverFloor) inc = heightOverFloor;
+                    BigBoundingBox.Y += inc;
+                    Position.Y += inc;
+                }
+                if (isjumping)
+                {
+                    double jumpTime = totalElapsed - jumpStartTime;                    
+                    int inc = (int)(elapsed * 30 / (jumpTime + 10));
+                    BigBoundingBox.Y -= inc;
+                    Position.Y -= inc;
+                }
+
+                if (dir != 0)
+                {
+                    debug += " dir=" + dir;
+                    // Select the frame
+                    frames = dir == -1 ? 0 : 12;                    
+
+                    // Horizontal movement
+                    int inc = (int)elapsed / div * dir;
+                    // Dip a toe in
+                    BigBoundingBox.X += inc;
+
+                    Collider = this.IsColliding(Game);
+                    if (Collider is Block)
+                    {
+                        // Hit something, so undo the change and stop
+                        BigBoundingBox.X -= inc;
+                    }
+                    else
+                    {
+                        Position.X += inc;
+                        delay = (long)totalElapsed / 80;
+                    }
+                }
+
+                if (Collider == null)
+                {
+                    // Only needed if fishes move
+                    Collider = this.IsColliding(Game);
+                }
+
+                if (Collider != null)
+                {
+                    Collider.Collision(this);
+                }
+
+                if (Collider != null) debug += " hit=" + Collider.GetType();
+
+                // Now draw it
+                sourceRect = new Rectangle(42 * frames, 0, 42, 60);
+            }
+            else if (!Game.paused && !Game.dead && !Game.Win)
             {
                 // Handle timing issues
                 float elapsed = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -64,7 +161,9 @@ namespace Project
                 if (Keyboard.GetState().IsKeyDown(Keys.D) || leftthumbstick.X > 0) dir++;
                 bool jump = (Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(0).IsButtonDown(Buttons.A)) && heightOverFloor == 0;
                 bool falling = !isjumping && heightOverFloor > 0;
+                slidejump = ((Keyboard.GetState().IsKeyDown(Keys.LeftShift) || GamePad.GetState(0).IsButtonDown(Buttons.LeftTrigger)) && Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(0).IsButtonDown(Buttons.A) && heightOverFloor == 0) || slidejump && heightOverFloor != 0;
                 bool sliding = (Keyboard.GetState().IsKeyDown(Keys.LeftShift) || GamePad.GetState(0).IsButtonDown(Buttons.LeftTrigger)) && heightOverFloor == 0;
+
 
                 if (jump)
                 {
@@ -79,10 +178,29 @@ namespace Project
 
                 // Determine horizontal speed modifier
                 int div = 7;
-                if (sliding)
+
+                if (slidejump)
                 {
-                    div = 4;
+
+                    float increase = (float)(count * 0.009);
+
+                    div = 3 + (int)increase;
+                    count++;
                 }
+                else if (sliding)
+                {
+                    IsSliding = true;
+                    float increase = (float)(count * 0.009);
+
+                    div = 4 + (int)increase;
+                    count++;
+                }
+                else
+                {
+                    IsSliding = false;
+                    count = 0;
+                }
+
 
 
                 // Vertical movement (ignores frames)
@@ -109,7 +227,7 @@ namespace Project
                     int frameStart = dir == -1 ? 3 : 7;
 
                     int frameCount = 3;
-                    if (sliding)
+                    if (sliding || slidejump)
                     {
                         frameStart = dir == -1 ? 0 : 12;
                         frameCount = 1;
@@ -155,7 +273,7 @@ namespace Project
             spriteBatch.Draw(Texture, CENTRE, sourceRect, Color.White);
             spriteBatch.DrawString(font, "SCORE:  " + score, new Vector2(100, 700), Color.White);
             spriteBatch.DrawString(font, "HEALTH:  " + health, new Vector2(1200, 700), Color.White);
-            spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
+            //spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
 
 
 
@@ -187,20 +305,28 @@ namespace Project
 
             }
 
-            if (Position.Y >= 810)
+            if (Position.Y >= 900)
             {
-                health = 0;
+                Game.dead = true;
             }
 
             if (health == 0)
             {
                 Game.dead = true;
             }
-            if (score >= 10)
-            {
-                Game.Win = true;
-            }
+            //if (score >= 10)
+            //{
+            //    Game.Win = true;
+            //}
 
+        }
+
+        public override double IsInRange(Thing otherThing)
+        {            
+            Length = Position - (otherThing.Position - Game.Offset);
+            double Distance = ((Length.X)* (Length.X)) + ((Length.Y) * (Length.Y));
+            Distance = Math.Sqrt(Distance);
+            return Distance;           
         }
     }
 }
