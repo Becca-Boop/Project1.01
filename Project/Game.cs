@@ -24,6 +24,7 @@ namespace Project
         public Texture2D PlayerSprite;
         public Texture2D BlockSprite;
         public Texture2D fishSprite;
+        public Texture2D BubbleSprite;
         public Texture2D PuffinSprite;
         private Texture2D background1;
         private Texture2D background2;
@@ -33,6 +34,12 @@ namespace Project
         public Texture2D DeathScreen;
         public Texture2D WinScreen1;
         public Texture2D WinScreen2;
+        public Texture2D OxygenEmpty;
+        public Texture2D Oxygen20;
+        public Texture2D Oxygen40;
+        public Texture2D Oxygen60;
+        public Texture2D Oxygen80;
+        public Texture2D OxygenFull;
         public Texture2D underwatereffect;
         public List<Thing> Things = new List<Thing>();
         public List<Thing> DeadThings;
@@ -116,6 +123,7 @@ namespace Project
             PlayerSprite = Content.Load<Texture2D>("SPSS");
             BlockSprite = Content.Load<Texture2D>("block" +  level);
             fishSprite = Content.Load<Texture2D>("fish");
+            BubbleSprite = Content.Load<Texture2D>("Bubbles");
             PuffinSprite = Content.Load<Texture2D>("puffinplaceholder");
             background1 = Content.Load<Texture2D>("Background1");
             background2 = Content.Load<Texture2D>("Background2");
@@ -126,7 +134,14 @@ namespace Project
             DeathScreen = Content.Load<Texture2D>("Death screen");
             WinScreen1 = Content.Load<Texture2D>("Win1");
             WinScreen2 = Content.Load<Texture2D>("Win2");
+            OxygenEmpty = Content.Load<Texture2D>("Oxygen empty");
+            Oxygen20 = Content.Load<Texture2D>("Oxygen 20");
+            Oxygen40 = Content.Load<Texture2D>("Oxygen 40");
+            Oxygen60 = Content.Load<Texture2D>("Oxygen 60");
+            Oxygen80 = Content.Load<Texture2D>("Oxygen 80");
+            OxygenFull = Content.Load<Texture2D>("Oxygen full");
             underwatereffect = Content.Load<Texture2D>("underwater");
+
 
 
 
@@ -397,8 +412,15 @@ namespace Project
 
                     if (rnd.Next(0, 10) == 1 && lastblockY != -1) //makes sure the fish isn't inside a block
                     {
+                        if (level == 4 && rnd.Next(0, 2) == 1)
+                        {
+                            Things.Add(new Bubbles(this, BubbleSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
+                        }
+                        else
+                        {
+                            Things.Add(new fish(this, fishSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
+                        }
                         placepossible = false; //stops it from placing the block
-                        Things.Add(new fish(this, fishSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
                     }
                     else if (rnd.Next(0, 10) > 10 - y)
                     {

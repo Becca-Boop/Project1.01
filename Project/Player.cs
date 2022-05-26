@@ -15,8 +15,12 @@ namespace Project
     {
         public int health;
         int frames = 0;
-        double totalElapsed;
+        public double totalElapsed;
         double jumpStartTime = 0;
+        public double airtime = 0;
+        double airtimepercent;
+        public double airstarttime = 0;
+        int bar;
         bool isjumping = false;
         bool slidejump = false;
         public bool IsSliding = false;
@@ -29,6 +33,7 @@ namespace Project
         public int score;
         Vector2 Length = new Vector2(0,0);
         int count = 0;
+        
 
         Thing Collider;
         Vector2 CENTRE = new Vector2(Game.WIDTH / 2 - 14, Game.HEIGHT / 2 - 20);
@@ -54,6 +59,32 @@ namespace Project
                 totalElapsed += elapsed;
                 long delay = (long)totalElapsed / 80;
                 debug = "";
+
+               
+                airtime = totalElapsed - airstarttime;
+                airtimepercent = airtime / 100;
+                switch(airtimepercent)
+                {
+                    case > 90
+                        bar = 5;
+                        break;
+                    case > 70
+                        bar = 4;
+                        break;
+                    case>50
+                        bar = 3;
+                        break;
+                    case>30
+                        bar = 2;
+                        break;
+                    case>10
+                        bar = 1;
+                        break;
+                    default
+                        bar = 0;
+                        break;
+                }
+                    
 
                 int heightOverFloor = GetHeightOverFloor(Game);
                 frames = 6;
@@ -136,7 +167,6 @@ namespace Project
                     Collider.Collision(this);
                 }
 
-                if (Collider != null) debug += " hit=" + Collider.GetType();
 
                 // Now draw it
                 sourceRect = new Rectangle(42 * frames, 0, 42, 60);
