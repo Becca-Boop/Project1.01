@@ -20,7 +20,7 @@ namespace Project
         public double airtime = 0;
         double airtimepercent;
         public double airstarttime = 0;
-        int bar;
+        string bar = "";
         bool isjumping = false;
         bool slidejump = false;
         public bool IsSliding = false;
@@ -33,6 +33,7 @@ namespace Project
         public int score;
         Vector2 Length = new Vector2(0,0);
         int count = 0;
+        Texture2D Oxytexture;
         
 
         Thing Collider;
@@ -62,29 +63,49 @@ namespace Project
 
                
                 airtime = totalElapsed - airstarttime;
-                airtimepercent = airtime / 100;
-                switch(airtimepercent)
+                if (airtime >= 10000)
                 {
-                    case > 90
-                        bar = 5;
+                    health--;
+                }
+                airtimepercent = airtime / 1000;
+                Math.Round(airtimepercent, 0);
+                //debug += (int)airtimepercent;
+                switch((int)airtimepercent)
+                {
+                    case 10:
+                        Oxytexture = Game.OxygenEmpty;
                         break;
-                    case > 70
-                        bar = 4;
+                    case 9:
+                        Oxytexture = Game.OxygenEmpty;
                         break;
-                    case>50
-                        bar = 3;
+                    case 8:
+                        Oxytexture = Game.Oxygen20;
                         break;
-                    case>30
-                        bar = 2;
+                    case 7:
+                        Oxytexture = Game.Oxygen20;
                         break;
-                    case>10
-                        bar = 1;
+                    case 6:
+                        Oxytexture = Game.Oxygen40;
                         break;
-                    default
-                        bar = 0;
+                    case 5:
+                        Oxytexture = Game.Oxygen40;
+                        break;
+                    case 4:
+                        Oxytexture = Game.Oxygen60;
+                        break;
+                    case 3:
+                        Oxytexture = Game.Oxygen60;
+                        break;
+                    case 2:
+                        Oxytexture = Game.Oxygen80;
+                        break;
+                    case 1:
+                        Oxytexture = Game.Oxygen80;
+                        break;
+                    default:
+                        Oxytexture = Game.OxygenFull;
                         break;
                 }
-                    
 
                 int heightOverFloor = GetHeightOverFloor(Game);
                 frames = 6;
@@ -303,6 +324,10 @@ namespace Project
             spriteBatch.Draw(Texture, CENTRE, sourceRect, Color.White);
             spriteBatch.DrawString(font, "SCORE:  " + score, new Vector2(100, 700), Color.White);
             spriteBatch.DrawString(font, "HEALTH:  " + health, new Vector2(1200, 700), Color.White);
+            if (Game.level == 4)
+            {
+                spriteBatch.Draw(Oxytexture, new Vector2(550, 700), Color.White);
+            }
             //spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
 
 

@@ -147,9 +147,9 @@ namespace Project
 
             Random rnd = new Random();
 
-            Things.Add(new Background(this, background1, new Vector2(-500, -100), new Rectangle(0, 0, 2048, 1500)));
-            Things.Add(new Background(this, background2, new Vector2(1548, -100), new Rectangle(0, 0, 2048, 1500)));
-            Things.Add(new Background(this, background3, new Vector2(3596, -100), new Rectangle(0, 0, 2048, 1500)));
+            Things.Add(new Background(this, background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
+            Things.Add(new Background(this, background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
+            Things.Add(new Background(this, background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
 
             if (level != 4)
             {
