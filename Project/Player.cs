@@ -20,7 +20,6 @@ namespace Project
         public double airtime = 0;
         double airtimepercent;
         public double airstarttime = 0;
-        string bar = "";
         bool isjumping = false;
         bool slidejump = false;
         public bool IsSliding = false;
@@ -328,7 +327,7 @@ namespace Project
             {
                 spriteBatch.Draw(Oxytexture, new Vector2(550, 700), Color.White);
             }
-            //spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
+            spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
 
 
 
@@ -381,7 +380,8 @@ namespace Project
             Length = Position - (otherThing.Position - Game.Offset);
             double Distance = ((Length.X)* (Length.X)) + ((Length.Y) * (Length.Y));
             Distance = Math.Sqrt(Distance);
-            return Distance;           
+            debug += Distance;
+            return Distance;
         }
     }
 }

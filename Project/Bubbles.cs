@@ -12,7 +12,7 @@ namespace Project
 {
     public class Bubbles : Thing
     {
-        bool counted = false;
+        //bool counted = false;
 
 
         public Bubbles(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)

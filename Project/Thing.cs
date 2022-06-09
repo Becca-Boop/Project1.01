@@ -14,7 +14,7 @@ namespace Project
     {
         public Vector2 Position;
         protected Texture2D Texture;
-        protected Rectangle LittleBoundingBox;
+        public Rectangle LittleBoundingBox;
         public Rectangle BigBoundingBox;
         protected Rectangle sourceRect;
         public Game Game;

@@ -26,6 +26,18 @@ namespace Project
         public Texture2D fishSprite;
         public Texture2D BubbleSprite;
         public Texture2D PuffinSprite;
+        public Texture2D SealSprite;
+        public Texture2D KangarooSprite;
+        public Texture2D WombatSprite;
+        public Texture2D RatSprite;
+        public Texture2D SpiderSprite;
+        public Texture2D JellyfishSprite;
+        public Texture2D StarfishSprite;
+        public Texture2D SharkSprite;
+        public Texture2D MonkeySprite;
+        public Texture2D DogSprite;
+
+
         private Texture2D background1;
         private Texture2D background2;
         private Texture2D background3;
@@ -125,6 +137,17 @@ namespace Project
             fishSprite = Content.Load<Texture2D>("fish");
             BubbleSprite = Content.Load<Texture2D>("Bubbles");
             PuffinSprite = Content.Load<Texture2D>("puffinplaceholder");
+            SealSprite = Content.Load<Texture2D>("Seal");
+            KangarooSprite = Content.Load<Texture2D>("kangaroo");
+            WombatSprite = Content.Load<Texture2D>("wombat");
+            RatSprite = Content.Load<Texture2D>("rat");
+            SpiderSprite = Content.Load<Texture2D>("spider");
+            JellyfishSprite = Content.Load<Texture2D>("jellyfish");
+            StarfishSprite = Content.Load<Texture2D>("starfish");
+            SharkSprite = Content.Load<Texture2D>("shark");
+            MonkeySprite = Content.Load<Texture2D>("spacemonkey");
+            DogSprite = Content.Load<Texture2D>("spacedog");
+
             background1 = Content.Load<Texture2D>("Background1");
             background2 = Content.Load<Texture2D>("Background2");
             background3 = Content.Load<Texture2D>("Background3");
@@ -410,19 +433,7 @@ namespace Project
                     int number = rnd.Next(-1, 2);
                     int chance = rnd.Next(0, 10);
 
-                    if (rnd.Next(0, 10) == 1 && lastblockY != -1) //makes sure the fish isn't inside a block
-                    {
-                        if (level == 4 && rnd.Next(0, 2) == 1)
-                        {
-                            Things.Add(new Bubbles(this, BubbleSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
-                        }
-                        else
-                        {
-                            Things.Add(new fish(this, fishSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
-                        }
-                        placepossible = false; //stops it from placing the block
-                    }
-                    else if (rnd.Next(0, 10) > 10 - y)
+                    if (rnd.Next(0, 10) > 10 - y)
                     {
                         if (y == lastblockY + 1 && maxheight == true) //checks if it is trying to place a block on top of 2 blocks
                         {
@@ -441,21 +452,56 @@ namespace Project
                         }
                         placepossible = true;
                     }
+                    else if (rnd.Next(0, 10) == 1)
+                    {
+                        if (level == 4 && rnd.Next(0, 2) == 1)
+                        {
+                            Things.Add(new Bubbles(this, BubbleSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
+                        }
+                        else if (rnd.Next(0, 3) == 1)
+                        {
+                            Things.Add(new Flyer(this, PuffinSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
+                        }
+                        else
+                        {
+                            Things.Add(new fish(this, fishSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
+                        }                        
+                        placepossible = false; //stops it from placing the block
+                    }
+                    //else if (rnd.Next(0, 10) > 10 - y)
+                    //{
+                    //    if (y == lastblockY + 1 && maxheight == true) //checks if it is trying to place a block on top of 2 blocks
+                    //    {
+                    //        placepossible = false; //stops it from placing the block
+                    //        maxheight = false;
+                    //    }
+                    //    else if (y == lastblockY + 1) //checks is there is a block below this point
+                    //    {
+                    //        maxheight = true; //the blocks can only be a maximum height of 2 for the player to be able to jump over it, so this is true if the heights of blocks is true
+                    //    }
+
+                    //    if (placepossible) //makes sure the block will be navigatable
+                    //    {
+                    //        Things.Add(new Block(this, BlockSprite, new Vector2(x * size + blockoffsetX, y * size + blockoffsetY), new Rectangle(0, 0, size, size)));
+                    //        lastblockY = y;
+                    //    }
+                    //    placepossible = true;
+                    //}
                     else
                     {
                         lastblockY = -1;
                     }
                 }
             }
-            int Puffins = rnd.Next(1, 5);
-            for (int i = 0; i < Puffins; i++)
-            {
-                int puffinX = rnd.Next(1, 4500);
-                int puffinY = rnd.Next(1, 400);
-                Things.Add(new Puffin(this, PuffinSprite, new Vector2(puffinX, puffinY), new Rectangle(0, 0, 40, 40)));
+            //int Puffins = rnd.Next(1, 5);
+            //for (int i = 0; i < Puffins; i++)
+            //{
+            //    int puffinX = rnd.Next(1, 4500);
+            //    int puffinY = rnd.Next(1, 400);
+            //    Things.Add(new Enemy(this, PuffinSprite, new Vector2(puffinX, puffinY), new Rectangle(0, 0, 40, 40)));
 
-            }
-            Things.Add(new Puffin(this, PuffinSprite, new Vector2(400, 400), new Rectangle(0, 0, 40, 40)));
+            //}
+            Things.Add(new Enemy(this, PuffinSprite, new Vector2(400, 400), new Rectangle(0, 0, 40, 40)));
 
             Player = new Player(this, PlayerSprite, new Vector2(PlayerposX, PlayerposY), new Rectangle(2, 2, 35, 48), font);
             Things.Add(Player);
