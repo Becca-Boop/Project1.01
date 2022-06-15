@@ -12,32 +12,34 @@ namespace Project
 {
     public class Enemy : Thing
     {
-        //bool counted = false;
+        bool counted = false;
         int state = 0;
 
         public Enemy(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
         {
         }
 
-        //public override void Collision(Thing otherThing)
-        //{
-        //    {
-        //        if (!counted)
-        //        {
-        //            if (Game.Player.IsSliding)
-        //            {
-        //                Game.DeadThings.Add(this);
-        //            }
-        //            else
-        //            {
-        //                Game.Player.health--;
-        //            }
-        //            counted = true;
-        //        }
-                
-        //    }
-        //}
-        
+        public override void Collision(Thing otherThing)
+        {
+            {
+                //Game.Player.health--;
+
+                //if (!counted)
+                //{
+                //    if (Game.Player.IsSliding)
+                //    {
+                //        Game.DeadThings.Add(this);
+                //    }
+                //    else
+                //    {
+                //        Game.Player.health--;
+                //    }
+                //    counted = true;
+                //}
+
+            }
+        }
+
         public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
         {
             float dt = (float)Game.Player.totalElapsed;

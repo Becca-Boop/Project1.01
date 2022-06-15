@@ -598,6 +598,26 @@ namespace Project
 
         }
 
+        private static void DoCreate(storageDevice device)
+        {
+
+        }
+
+        private static void DoOpenFile()
+        {
+            try
+            {
+                System.IO.Stream stream = TitleContainer.OpenStream("SaveGame.Txt");
+                System.IO.StreamReader sreader = new System.IO.StreamReader(stream);
+
+                Console.WriteLine("File Size: " + stream.Length);
+                stream.Close();
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+            }
+        }
+
     }
 
 }
