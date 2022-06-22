@@ -38,9 +38,23 @@ namespace Project
         public Texture2D DogSprite;
 
 
-        private Texture2D background1;
-        private Texture2D background2;
-        private Texture2D background3;
+        private Texture2D l1background1;
+        private Texture2D l1background2;
+        private Texture2D l1background3;
+        private Texture2D l2background1;
+        private Texture2D l2background2;
+        private Texture2D l2background3;
+        private Texture2D l3background1;
+        private Texture2D l3background2;
+        private Texture2D l3background3;
+        private Texture2D l4background1;
+        private Texture2D l4background2;
+        private Texture2D l4background3;
+        private Texture2D l5background1;
+        private Texture2D l5background2;
+        private Texture2D l5background3;
+
+
         public Texture2D PauseOverlay;
         public Texture2D PauseOverlayController;
         public Texture2D DeathScreen;
@@ -148,9 +162,21 @@ namespace Project
             MonkeySprite = Content.Load<Texture2D>("spacemonkey");
             DogSprite = Content.Load<Texture2D>("spacedog");
 
-            background1 = Content.Load<Texture2D>("Background1");
-            background2 = Content.Load<Texture2D>("Background2");
-            background3 = Content.Load<Texture2D>("Background3");
+            l1background1 = Content.Load<Texture2D>("Background1");
+            l1background2 = Content.Load<Texture2D>("Background2");
+            l1background3 = Content.Load<Texture2D>("Background3");
+            l2background1 = Content.Load<Texture2D>("Background4");
+            l2background2 = Content.Load<Texture2D>("Background5");
+            l2background3 = Content.Load<Texture2D>("Background6");
+            l3background1 = Content.Load<Texture2D>("Background7");
+            l3background2 = Content.Load<Texture2D>("Background8");
+            l3background3 = Content.Load<Texture2D>("Background9");
+            l4background1 = Content.Load<Texture2D>("Background10");
+            l4background2 = Content.Load<Texture2D>("Background11");
+            l4background3 = Content.Load<Texture2D>("Background12");
+            //l5background1 = Content.Load<Texture2D>("Background13");
+            //l5background2 = Content.Load<Texture2D>("Background14");
+            //l5background3 = Content.Load<Texture2D>("Background15");
             PauseOverlay = Content.Load<Texture2D>("Pause Menu");
             PauseOverlayController = Content.Load<Texture2D>("Pause Menu Controller");
             font = Content.Load<SpriteFont>("Score");
@@ -169,10 +195,42 @@ namespace Project
 
 
             Random rnd = new Random();
-
-            Things.Add(new Background(this, background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
-            Things.Add(new Background(this, background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
-            Things.Add(new Background(this, background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
+            if (level == 1)
+            {
+                Things.Add(new Background(this, l1background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l1background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l1background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
+            }
+            else if (level == 2)
+            {
+                Things.Add(new Background(this, l2background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l2background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l2background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
+            }
+            else if (level == 3)
+            {
+                Things.Add(new Background(this, l3background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l3background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l3background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
+            }
+            else if (level == 4)
+            {
+                Things.Add(new Background(this, l4background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l4background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l4background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
+            }
+            //else if (level == 5)
+            //{
+            //    Things.Add(new Background(this, l5background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
+            //    Things.Add(new Background(this, l5background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
+            //    Things.Add(new Background(this, l5background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
+            //}
+            else
+            {
+                Things.Add(new Background(this, l1background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l1background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l1background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
+            }
 
             if (level != 4)
             {
@@ -183,6 +241,7 @@ namespace Project
                 Things.Add(new Block(this, BlockSprite, new Vector2(272, 566), new Rectangle(0, 0, 64, 64)));
                 Things.Add(new Block(this, BlockSprite, new Vector2(336, 566), new Rectangle(0, 0, 64, 64)));
             }
+            
 
             int blockoffsetX = 400;
             int blockoffsetY = 54;
@@ -501,7 +560,8 @@ namespace Project
             //    Things.Add(new Enemy(this, PuffinSprite, new Vector2(puffinX, puffinY), new Rectangle(0, 0, 40, 40)));
 
             //}
-            Things.Add(new Enemy(this, PuffinSprite, new Vector2(400, 400), new Rectangle(0, 0, 40, 40)));
+
+
 
             Player = new Player(this, PlayerSprite, new Vector2(PlayerposX, PlayerposY), new Rectangle(2, 2, 35, 48), font);
             Things.Add(Player);
@@ -596,27 +656,7 @@ namespace Project
 
             base.Draw(gameTime);
 
-        }
-
-        private static void DoCreate(storageDevice device)
-        {
-
-        }
-
-        private static void DoOpenFile()
-        {
-            try
-            {
-                System.IO.Stream stream = TitleContainer.OpenStream("SaveGame.Txt");
-                System.IO.StreamReader sreader = new System.IO.StreamReader(stream);
-
-                Console.WriteLine("File Size: " + stream.Length);
-                stream.Close();
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-            }
-        }
+        }       
 
     }
 

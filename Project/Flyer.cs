@@ -24,6 +24,7 @@ namespace Project
         public Flyer(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
         {
         }
+
         //public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
         //{            
         //    Random rnd = new Random();
