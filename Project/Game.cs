@@ -119,31 +119,11 @@ namespace Project
             }
 
             Random Level = new Random();
-            level = Level.Next(1, 5);
+            level = Level.Next(1, 6);
 
             dead = false;
             Win = false;
-            //int level = 0;
-            //if (level1)
-            //{
-            //    level = 1;
-            //}
-            //if (level2)
-            //{
-            //    level = 2;
-            //}
-            //if (level3)
-            //{
-            //    level = 3;
-            //}
-            //if (level4)
-            //{
-            //    level = 4;
-            //}
-            //if (level5)
-            //{
-            //    level = 5;
-            //}
+            
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             PlayerSprite = Content.Load<Texture2D>("SPSS");
@@ -174,9 +154,9 @@ namespace Project
             l4background1 = Content.Load<Texture2D>("Background10");
             l4background2 = Content.Load<Texture2D>("Background11");
             l4background3 = Content.Load<Texture2D>("Background12");
-            //l5background1 = Content.Load<Texture2D>("Background13");
-            //l5background2 = Content.Load<Texture2D>("Background14");
-            //l5background3 = Content.Load<Texture2D>("Background15");
+            l5background1 = Content.Load<Texture2D>("Background13");
+            l5background2 = Content.Load<Texture2D>("Background14");
+            l5background3 = Content.Load<Texture2D>("Background15");
             PauseOverlay = Content.Load<Texture2D>("Pause Menu");
             PauseOverlayController = Content.Load<Texture2D>("Pause Menu Controller");
             font = Content.Load<SpriteFont>("Score");
@@ -219,18 +199,13 @@ namespace Project
                 Things.Add(new Background(this, l4background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
                 Things.Add(new Background(this, l4background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
             }
-            //else if (level == 5)
-            //{
-            //    Things.Add(new Background(this, l5background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
-            //    Things.Add(new Background(this, l5background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
-            //    Things.Add(new Background(this, l5background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
-            //}
-            else
+            else if (level == 5)
             {
-                Things.Add(new Background(this, l1background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
-                Things.Add(new Background(this, l1background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
-                Things.Add(new Background(this, l1background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l5background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l5background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
+                Things.Add(new Background(this, l5background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
             }
+            
 
             if (level != 4)
             {
