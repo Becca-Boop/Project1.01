@@ -47,11 +47,13 @@
     <Compile Include="Fish.cs" />
     <Compile Include="Flyer.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GridLocation.cs" />
     <Compile Include="NonFlyer.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="SquareGrid.cs" />
     <Compile Include="Thing.cs" />
   </ItemGroup>
   <ItemGroup>
