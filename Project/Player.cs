@@ -154,7 +154,7 @@ namespace Project
 
                 if (dir != 0)
                 {
-                    debug += " dir=" + dir;
+                    //debug += " dir=" + dir;
                     // Select the frame
                     frames = dir == -1 ? 0 : 12;                    
 
@@ -272,7 +272,7 @@ namespace Project
 
                 if (dir != 0)
                 {
-                    debug += " dir=" + dir;
+                    //debug += " dir=" + dir;
                     // Select the frame
                     int frameStart = dir == -1 ? 3 : 7;
 
@@ -314,7 +314,7 @@ namespace Project
                     Collider.Collision(this);
                 }
 
-                if (Collider != null) debug += " hit=" + Collider.GetType();
+                //if (Collider != null) debug += " hit=" + Collider.GetType();
 
                 // Now draw it
                 sourceRect = new Rectangle(42 * frames, 0, 42, 60);
@@ -326,6 +326,14 @@ namespace Project
             if (Game.level == 4)
             {
                 spriteBatch.Draw(Oxytexture, new Vector2(550, 700), Color.White);
+            }
+            foreach (var thisthing in Game.Things)
+            {
+                if (thisthing is NonFlyer)
+                {
+                    debug += thisthing.Position.X + "    ";
+                }
+
             }
             spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
 
@@ -380,7 +388,7 @@ namespace Project
             Length = Position - (otherThing.Position - Game.Offset);
             double Distance = ((Length.X)* (Length.X)) + ((Length.Y) * (Length.Y));
             Distance = Math.Sqrt(Distance);
-            debug += Distance;
+            //debug += Distance;
             return Distance;
         }
     }

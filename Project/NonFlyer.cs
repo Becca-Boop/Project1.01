@@ -16,13 +16,16 @@ namespace Project
         int state = 1;
         bool Xnewdirection = true;
         bool Ynewdirection = true;
-        int X = 0;
+        public int X = 0;
         int dirx = 0;
         Thing Collider;
         int div = 7;
         public double totalElapsed;
         bool changedir = true;
         int dir = 0;
+        int changernd = 0;
+        
+
 
 
 
@@ -36,6 +39,169 @@ namespace Project
         {
             if (!Game.paused)
             {
+                X = (int)Position.X ;
+                if (X < 0)
+                {
+                    X = X * -1;
+                }
+
+                if (X < 1000)
+                {
+                    X = X / 100;
+                }
+                else
+                {
+                    X = X / 1000;
+                }
+                
+                Random rnd = new Random();
+
+                if (X == 1)
+                {
+                    Random rnd1 = new Random();
+                    changernd = rnd1.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd1.Next(-1, 2);
+                    }
+
+                }
+                else if (X == 2)
+                {
+                    Random rnd2 = new Random();
+                    changernd = rnd2.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd2.Next(-1, 2);
+                    }
+                }
+                else if (X == 3)
+                {
+                    Random rnd3 = new Random();
+                    changernd = rnd3.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd3.Next(-1, 2);
+                    }
+
+                }
+                else if (X == 4)
+                {
+                    Random rnd4 = new Random();
+                    changernd = rnd4.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd4.Next(-1, 2);
+                    }
+                }
+                else if (X == 5)
+                {
+                    Random rnd5 = new Random();
+                    changernd = rnd5.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd5.Next(-1, 2);
+                    }
+                }
+                else if (X == 6)
+                {
+                    Random rnd6 = new Random();
+                    changernd = rnd6.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd6.Next(-1, 2);
+                    }
+                }
+                else if (X == 7)
+                {
+                    Random rnd7 = new Random();
+                    changernd = rnd7.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd7.Next(-1, 2);
+                    }
+                }
+                else if (X == 8)
+                {
+                    Random rnd8 = new Random();
+                    changernd = rnd8.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd8.Next(-1, 2);
+                    }
+                }
+                else if (X == 9)
+                {
+                    Random rnd9 = new Random();
+                    changernd = rnd9.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd9.Next(-1, 2);
+                    }
+                }
+                else if (X == 10)
+                {
+                    Random rnd10 = new Random();
+                    changernd = rnd10.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd10.Next(-1, 2);
+                    }
+                }
+                else if (X == 11)
+                {
+                    Random rnd11 = new Random();
+                    changernd = rnd11.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd11.Next(-1, 2);
+                    }
+                }
+                else if (X == 12)
+                {
+                    Random rnd12 = new Random();
+                    changernd = rnd12.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd12.Next(-1, 2);
+                    }
+                }
+                else if (X == 13)
+                {
+                    Random rnd13 = new Random();
+                    changernd = rnd13.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd13.Next(-1, 2);
+                    }
+                }
+                else if (X == 14)
+                {
+                    Random rnd14 = new Random();
+                    changernd = rnd14.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd14.Next(-1, 2);
+                    }
+                }
+                else if (X == 15)
+                {
+                    Random rnd15 = new Random();
+                    changernd = rnd15.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd15.Next(-1, 2);
+                    }
+                }
+                else
+                {
+                    Random rnd16 = new Random();
+                    changernd = rnd16.Next(1, 50);
+                    if (changernd == 1)
+                    {
+                        dir = rnd16.Next(-1, 2);
+                    }
+                }
                 int heightOverFloor = GetHeightOverFloor(Game);
                 bool falling = heightOverFloor > 0;
                 float elapsed = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -56,21 +222,19 @@ namespace Project
                     //}
                     //else
                     //{
-                        Random rnd = new Random();
-                    if (changedir)
-                    {
-                        dir = rnd.Next(-1, 2);
-                    }
+                    //if (changedir)
+                    //{
+                    //    dir = rnd.Next(-1, 2);
+                    //}
 
-                    int change = rnd.Next(1, 10);
-                    if (change == 1)
-                    {
-                        changedir = true;
-                    }
-                    else
-                    {
-                        changedir = false;
-                    }
+                    //if (changernd == 1)
+                    //{
+                    //    changedir = true;
+                    //}
+                    //else
+                    //{
+                    //    changedir = false;
+                    //}
 
                         if (dir != 0)
                         {
