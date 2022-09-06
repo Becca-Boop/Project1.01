@@ -69,6 +69,7 @@ namespace Project
         public Texture2D Oxygen80;
         public Texture2D OxygenFull;
         public Texture2D underwatereffect;
+        public Texture2D snowball;
         public List<Thing> Things = new List<Thing>();
         public List<Thing> DeadThings;
         public bool dead;
@@ -172,8 +173,10 @@ namespace Project
             Oxygen80 = Content.Load<Texture2D>("Oxygen 80");
             OxygenFull = Content.Load<Texture2D>("Oxygen full");
             underwatereffect = Content.Load<Texture2D>("underwater");
+            snowballSprite = Content.Load<Texture2D>("Snowball");
 
-            
+
+
 
             Random rnd = new Random();
             if (level == 1)
@@ -482,11 +485,46 @@ namespace Project
                 Y = 8;
             else
                 Y = 12;
+
+            Texture2D enemy1 = null;
+            Texture2D enemy2 = null;
+
+
+            if (FlyerEnemy1 != null)
+            {
+                enemy1 = FlyerEnemy1;
+            }
+            else if (FlyerEnemy2 != null)
+            {
+                enemy1 = FlyerEnemy2;
+            }
+            else if (NonFlyerEnemy1 != null)
+            {
+                enemy1 = NonFlyerEnemy1;
+            }
+
+
+            if (FlyerEnemy2 != null && enemy1 != FlyerEnemy2)
+            {
+                enemy2 = FlyerEnemy2;
+            }
+            else if (NonFlyerEnemy1 != null && enemy1 != NonFlyerEnemy1)
+            {
+                enemy2 = NonFlyerEnemy1;
+            }
+            else if (NonFlyerEnemy2 != null)
+            {
+                enemy2 = NonFlyerEnemy2;
+            }
+
+
             for (int x = 0; x < X; x++)
             {
                 int lastblockY = -1;  // at what height was the last block?
                 bool placepossible = true;  // can we place a block here?
                 bool maxheight = false;  // true when we have max number of blocks
+
+                
 
                 for (int y = Y; y > 0; y--)
                 {
@@ -528,51 +566,50 @@ namespace Project
                             //    Things.Add(new NonFlyer(this, NonFlyerEnemy1, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
                             //else if (rnd.Next(0, 4) == 3 && NonFlyerEnemy2 != null)
                             //    Things.Add(new NonFlyer(this, NonFlyerEnemy2, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
-                            Texture2D enemy1 = null;
-                            Texture2D enemy2 = null;
+                            //Texture2D enemy1 = null;
+                            //Texture2D enemy2 = null;
 
 
-                            if (FlyerEnemy1 != null)
-                            {
-                                enemy1 = FlyerEnemy1;
-                            }
-                            else if (FlyerEnemy2 != null)
-                            {
-                                enemy1 = FlyerEnemy2;
-                            }
-                            else if (NonFlyerEnemy1 != null)
-                            {
-                                enemy1 = NonFlyerEnemy1;
-                            }
+                            /////
 
 
-                            if (FlyerEnemy2 != null && enemy1 != FlyerEnemy2)
-                            {
-                                enemy2 = FlyerEnemy2;
-                            }
-                            else if (NonFlyerEnemy1 != null && enemy1 != NonFlyerEnemy1)
-                            {
-                                enemy2 = NonFlyerEnemy1;
-                            }
-                            else if (NonFlyerEnemy2 != null)
-                            {
-                                enemy2 = NonFlyerEnemy2;
-                            }
+                            //if (FlyerEnemy1 != null)
+                            //{
+                            //    enemy1 = FlyerEnemy1;
+                            //}
+                            //else if (FlyerEnemy2 != null)
+                            //{
+                            //    enemy1 = FlyerEnemy2;
+                            //}
+                            //else if (NonFlyerEnemy1 != null)
+                            //{
+                            //    enemy1 = NonFlyerEnemy1;
+                            //}
+
+
+                            //if (FlyerEnemy2 != null && enemy1 != FlyerEnemy2)
+                            //{
+                            //    enemy2 = FlyerEnemy2;
+                            //}
+                            //else if (NonFlyerEnemy1 != null && enemy1 != NonFlyerEnemy1)
+                            //{
+                            //    enemy2 = NonFlyerEnemy1;
+                            //}
+                            //else if (NonFlyerEnemy2 != null)
+                            //{
+                            //    enemy2 = NonFlyerEnemy2;
+                            //}
                             
 
                             if (rnd.Next(0, 2) == 0)
                             {                            
-                                if(enemy1 != NonFlyerEnemy1)
-                                    Things.Add(new Flyer(this, enemy1, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
-                                else
+                                if(enemy1 == NonFlyerEnemy1)
                                     Things.Add(new NonFlyer(this, enemy1, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
                             }
                             else
                             {
                                 if (enemy2 != FlyerEnemy2)
                                     Things.Add(new NonFlyer(this, enemy2, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
-                                else
-                                    Things.Add(new Flyer(this, enemy2, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
                             }
                         }
                         else
@@ -606,6 +643,19 @@ namespace Project
                     }
                 }
             }
+
+            if (rnd.Next(0, 2) == 0)
+            {
+                if (enemy1 != NonFlyerEnemy1)
+                    Things.Add(new Flyer(this, enemy1, new Vector2(rnd.Next(0,8) * size , rnd.Next(0, 12) * size), new Rectangle(0, 0, 40, 40)));
+            }
+            else
+            {
+                if (enemy2 == FlyerEnemy2)
+                    Things.Add(new Flyer(this, enemy2, new Vector2(rnd.Next(0, 8) * size, rnd.Next(0, 12) * size), new Rectangle(0, 0, 40, 40)));
+            }
+
+
             //int Puffins = rnd.Next(1, 5);
             //for (int i = 0; i < Puffins; i++)
             //{
@@ -617,7 +667,7 @@ namespace Project
 
 
 
-            Player = new Player(this, PlayerSprite, new Vector2(PlayerposX, PlayerposY), new Rectangle(2, 2, 35, 48), font);
+            Player = new Player(this, PlayerSprite, new Vector2(PlayerposX, PlayerposY), new Rectangle(2, 2, 35, 48), font, snowballSprite);
             Things.Add(Player);
         }
 

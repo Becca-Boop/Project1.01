@@ -21,6 +21,7 @@ namespace Project
         int dirx = 0;
         int diry = 0;
         Thing Collider;
+        SpriteEffects s = SpriteEffects.None;
 
         public Flyer(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
         {
@@ -35,6 +36,15 @@ namespace Project
                 Vector2 moveDir = Position - Game.Player.Position;
                 moveDir.Normalize();
                 float distance = Vector2.Distance(Position, Game.Player.Position);
+                if (moveDir.X < 0.5)
+                {
+                    s = SpriteEffects.FlipHorizontally;
+                }
+                else
+                {
+                    s = SpriteEffects.None;
+                }
+
                 if (state == 0)
                 {
                     if (distance < 600 && distance > 10)
@@ -97,10 +107,7 @@ namespace Project
                             {
                                 Ynewdirection = false;
                             }
-
-                        }
-
-                        
+                        }                        
                     }
                 }
                 else if (state == 1)
@@ -109,7 +116,7 @@ namespace Project
                     state = 0;
                 }
             }
-            spriteBatch.Draw(Texture, Position - Game.Offset, LittleBoundingBox, Color.White);
+            spriteBatch.Draw(Texture, Position - Game.Offset, LittleBoundingBox, Color.White, 0f, Vector2.Zero, Vector2.One, s, 0f);
         }
     }
 }

@@ -24,7 +24,8 @@ namespace Project
         bool changedir = true;
         int dir = 0;
         int changernd = 0;
-        
+        SpriteEffects s = SpriteEffects.None;
+
 
 
 
@@ -39,6 +40,15 @@ namespace Project
         {
             if (!Game.paused)
             {
+                if (dir == 1)
+                {
+                    s = SpriteEffects.FlipHorizontally;
+                }
+                else
+                {
+                    s = SpriteEffects.None;
+                }
+
                 X = (int)Position.X ;
                 if (X < 0)
                 {
@@ -303,7 +313,7 @@ namespace Project
                     Position.Y += inc;
                 }
             }
-            spriteBatch.Draw(Texture, Position - Game.Offset, LittleBoundingBox, Color.White);
+            spriteBatch.Draw(Texture, Position - Game.Offset, LittleBoundingBox, Color.White, 0f, Vector2.Zero, Vector2.One, s, 0f);
         }
     }
 }

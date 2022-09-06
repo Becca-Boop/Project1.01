@@ -33,6 +33,9 @@ namespace Project
         Vector2 Length = new Vector2(0,0);
         int count = 0;
         Texture2D Oxytexture;
+        bool attack = false;
+        Texture2D SnowballSprite;
+
         
 
         Thing Collider;
@@ -40,13 +43,14 @@ namespace Project
         string debug;
 
 
-        public Player(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox, SpriteFont _font) : base(game, _texture, _position, _boundingBox)
+        public Player(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox, SpriteFont _font, Texture2D _snowball) : base(game, _texture, _position, _boundingBox)
         {
             health = 4;
             Game.paused = false;
             Game.restart = true;
             score = 0;
             font = _font;
+            SnowballSprite = _snowball;
         }
 
         public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
@@ -112,12 +116,14 @@ namespace Project
                 // What does the player want to do?
                 int dir = 0;
                 Vector2 leftthumbstick = GamePad.GetState(0).ThumbSticks.Left;
+                attack = false;
 
 
                 if (Keyboard.GetState().IsKeyDown(Keys.A) || leftthumbstick.X < 0) dir--;
                 if (Keyboard.GetState().IsKeyDown(Keys.D) || leftthumbstick.X > 0) dir++;
                 bool jump = ((Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(0).IsButtonDown(Buttons.A)) && (jumpStartTime + 500) < totalElapsed);
                 bool falling = !isjumping && heightOverFloor > 0;
+                if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) || GamePad.GetState(0).IsButtonDown(Buttons.X)) attack = true;
 
                 if (jump)
                 {
@@ -380,6 +386,11 @@ namespace Project
             //{
             //    Game.Win = true;
             //}
+
+            if (attack)
+            {
+                //use snowballs
+            }
 
         }
 
