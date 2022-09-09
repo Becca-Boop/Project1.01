@@ -118,5 +118,15 @@ namespace Project
             }
             spriteBatch.Draw(Texture, Position - Game.Offset, LittleBoundingBox, Color.White, 0f, Vector2.Zero, Vector2.One, s, 0f);
         }
+
+        public override void Collision(Thing otherThing)
+        {
+            {
+                
+                    Game.Player.health--;
+                    counted = true;
+                
+            }
+        }
     }
 }

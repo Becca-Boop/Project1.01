@@ -69,7 +69,7 @@ namespace Project
         public Texture2D Oxygen80;
         public Texture2D OxygenFull;
         public Texture2D underwatereffect;
-        public Texture2D snowball;
+        public Texture2D snowballSprite;
         public List<Thing> Things = new List<Thing>();
         public List<Thing> DeadThings;
         public bool dead;
@@ -718,7 +718,6 @@ namespace Project
             foreach (var Thing in Things)
             {
                 Thing.Update(gameTime, spriteBatch);
-
             }
 
             foreach (var Thing in DeadThings)

@@ -268,6 +268,10 @@ namespace Project
                                     Position.X += inc;
                                     delay = (long)totalElapsed / 80;
                                 }
+                                if (Collider is Player)
+                                {
+                                    Game.Player.health--;
+                                }
 
 
                                 //if (Xnewdirection)

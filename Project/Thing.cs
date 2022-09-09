@@ -92,7 +92,17 @@ namespace Project
         public virtual void Update(GameTime gameTime, SpriteBatch spriteBatch)
         {
         }
+        public Vector2 position
+        {
+            get
+            {
+                return Position;
+            }
+            set
+            {
+                Position = value;
+            }
+        }
 
-        
     }
 }

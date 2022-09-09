@@ -36,7 +36,8 @@ namespace Project
                     Game.DeadThings.Add(this);
                 }
             }
-
         }
+
+        
     }
 }

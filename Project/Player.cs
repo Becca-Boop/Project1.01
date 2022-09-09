@@ -35,6 +35,7 @@ namespace Project
         Texture2D Oxytexture;
         bool attack = false;
         Texture2D SnowballSprite;
+        bool damage = false;
 
         
 
@@ -55,6 +56,8 @@ namespace Project
 
         public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
         {
+
+
 
             if (!Game.paused && !Game.dead && !Game.Win && Game.level == 4)
             {
@@ -193,6 +196,11 @@ namespace Project
                     Collider.Collision(this);
                 }
 
+                if (Collider is Flyer)
+                {
+                    health--;
+                }
+
 
                 // Now draw it
                 sourceRect = new Rectangle(42 * frames, 0, 42, 60);
@@ -318,7 +326,14 @@ namespace Project
                 if (Collider != null)
                 {
                     Collider.Collision(this);
+                }               
+
+
+                if (Collider is Flyer || Collider is NonFlyer)
+                {                    
+                    health--;
                 }
+
 
                 //if (Collider != null) debug += " hit=" + Collider.GetType();
 
@@ -341,7 +356,7 @@ namespace Project
                 }
 
             }
-            spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
+            //spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
 
 
 
