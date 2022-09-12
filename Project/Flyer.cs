@@ -107,7 +107,13 @@ namespace Project
                             {
                                 Ynewdirection = false;
                             }
-                        }                        
+
+                            Collider = this.IsColliding(Game);
+                            if (Collider is Player)
+                            {
+                                Game.Player.health--;
+                            }
+                        }
                     }
                 }
                 else if (state == 1)
@@ -122,10 +128,7 @@ namespace Project
         public override void Collision(Thing otherThing)
         {
             {
-                
-                    Game.Player.health--;
-                    counted = true;
-                
+                Game.Player.health--;
             }
         }
     }

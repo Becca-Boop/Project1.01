@@ -35,9 +35,11 @@ namespace Project
         Texture2D Oxytexture;
         bool attack = false;
         Texture2D SnowballSprite;
-        bool damage = false;
+        private float ShotTimer;
 
-        
+
+
+
 
         Thing Collider;
         Vector2 CENTRE = new Vector2(Game.WIDTH / 2 - 14, Game.HEIGHT / 2 - 20);
@@ -127,6 +129,7 @@ namespace Project
                 bool jump = ((Keyboard.GetState().IsKeyDown(Keys.Space) || GamePad.GetState(0).IsButtonDown(Buttons.A)) && (jumpStartTime + 500) < totalElapsed);
                 bool falling = !isjumping && heightOverFloor > 0;
                 if (Keyboard.GetState().IsKeyDown(Keys.LeftControl) || GamePad.GetState(0).IsButtonDown(Buttons.X)) attack = true;
+
 
                 if (jump)
                 {
@@ -326,14 +329,8 @@ namespace Project
                 if (Collider != null)
                 {
                     Collider.Collision(this);
-                }               
-
-
-                if (Collider is Flyer || Collider is NonFlyer)
-                {                    
-                    health--;
+                    debug += Collider;
                 }
-
 
                 //if (Collider != null) debug += " hit=" + Collider.GetType();
 
@@ -352,11 +349,11 @@ namespace Project
             {
                 if (thisthing is NonFlyer)
                 {
-                    debug += thisthing.Position.X + "    ";
+                   // debug += thisthing.Position.X + "    ";
                 }
 
             }
-            //spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
+            spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
 
 
 
@@ -392,6 +389,10 @@ namespace Project
             {
                 Game.dead = true;
             }
+            if (Position.X >= 4000)
+            {
+                //Game.level++;
+            }
 
             if (health == 0)
             {
@@ -403,8 +404,8 @@ namespace Project
             //}
 
             if (attack)
-            {
-                //use snowballs
+            {                
+                //Shoot();                
             }
 
         }
@@ -417,5 +418,11 @@ namespace Project
             //debug += Distance;
             return Distance;
         }
+
+        //private void Shoot()
+        //{
+        //    attack = true;
+        //    ShotTimer = 0.5f;
+        //}
     }
 }
