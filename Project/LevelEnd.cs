@@ -10,12 +10,11 @@ using System.Threading.Tasks;
 
 namespace Project
 {
-    public class Bubbles : Thing
+    class LevelEnd : Thing
     {
-        //bool counted = false;
+        bool counted = false;
 
-
-        public Bubbles(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
+        public LevelEnd(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
         {
         }
 
@@ -27,9 +26,11 @@ namespace Project
 
         public override void Collision(Thing otherThing)
         {
-                            
-            Game.Player.airstarttime = Game.Player.totalElapsed;                
-            
+            if(!counted)
+            {
+                Game.Win = true;
+                counted = true;
+            }
         }
     }
 }

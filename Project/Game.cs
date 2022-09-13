@@ -22,6 +22,7 @@ namespace Project
         public Texture2D BlockSprite;
         public Texture2D fishSprite;
         public Texture2D BubbleSprite;
+        public Texture2D EmptySprite;
         public Texture2D PuffinSprite;
         public Texture2D SealSprite;
         public Texture2D KangarooSprite;
@@ -85,6 +86,7 @@ namespace Project
 
         public int frameCount = 0;
         public int level;
+        public int previouslevel;
         
 
         public Game()
@@ -125,8 +127,7 @@ namespace Project
             level = Level.Next(1, 6);
 
             dead = false;
-            Win = false;
-            
+            Win = false; 
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             PlayerSprite = Content.Load<Texture2D>("SPSS");
@@ -144,6 +145,7 @@ namespace Project
             SharkSprite = Content.Load<Texture2D>("shark");
             MonkeySprite = Content.Load<Texture2D>("spacemonkey");
             DogSprite = Content.Load<Texture2D>("spacedog");
+            //EmptySprite = Content.Load<Texture2D>("emptysprite");
 
             l1background1 = Content.Load<Texture2D>("Background1");
             l1background2 = Content.Load<Texture2D>("Background2");
@@ -653,22 +655,15 @@ namespace Project
             {
                 if (enemy2 == FlyerEnemy2)
                     Things.Add(new Flyer(this, enemy2, new Vector2(rnd.Next(0, 8) * size, rnd.Next(0, 12) * size), new Rectangle(0, 0, 40, 40)));
-            }
-
-
-            //int Puffins = rnd.Next(1, 5);
-            //for (int i = 0; i < Puffins; i++)
-            //{
-            //    int puffinX = rnd.Next(1, 4500);
-            //    int puffinY = rnd.Next(1, 400);
-            //    Things.Add(new Enemy(this, PuffinSprite, new Vector2(puffinX, puffinY), new Rectangle(0, 0, 40, 40)));
-
-            //}
-
+            }            
 
 
             Player = new Player(this, PlayerSprite, new Vector2(PlayerposX, PlayerposY), new Rectangle(2, 2, 35, 48), font, snowballSprite);
             Things.Add(Player);
+
+
+            Things.Add(new LevelEnd(this, BubbleSprite, new Vector2(4000, 500), new Rectangle(0, 0, 40, 40))); //change texture from bubbles
+
         }
 
 
@@ -687,8 +682,6 @@ namespace Project
                 {
                     restart = true;
                     LoadContent();
-                    LoadContent();
-
                 }
             }
             if (Win)

@@ -114,6 +114,8 @@ namespace Project
                         Oxytexture = Game.OxygenFull;
                         break;
                 }
+                spriteBatch.Draw(Oxytexture, new Vector2(550, 700), Color.White);
+
 
                 int heightOverFloor = GetHeightOverFloor(Game);
                 frames = 6;
@@ -164,6 +166,7 @@ namespace Project
                     Position.Y -= inc;
                 }
 
+                Collider = this.IsColliding(Game);
                 if (dir != 0)
                 {
                     //debug += " dir=" + dir;
@@ -175,7 +178,6 @@ namespace Project
                     // Dip a toe in
                     BigBoundingBox.X += inc;
 
-                    Collider = this.IsColliding(Game);
                     if (Collider is Block)
                     {
                         // Hit something, so undo the change and stop
@@ -186,6 +188,10 @@ namespace Project
                         Position.X += inc;
                         delay = (long)totalElapsed / 80;
                     }
+                }
+                if (Collider is Block || Collider is fish || Collider is Bubbles || Collider is LevelEnd) //check if being attacked
+                {
+                    health--;
                 }
 
                 if (Collider == null)
@@ -287,6 +293,7 @@ namespace Project
                     Position.Y -= inc;
                 }
 
+                Collider = this.IsColliding(Game);
                 if (dir != 0)
                 {
                     //debug += " dir=" + dir;
@@ -307,7 +314,6 @@ namespace Project
                     // Dip a toe in
                     BigBoundingBox.X += inc;
 
-                    Collider = this.IsColliding(Game);
                     if (Collider is Block)
                     {
                         // Hit something, so undo the change and stop
@@ -341,10 +347,7 @@ namespace Project
             spriteBatch.Draw(Texture, CENTRE, sourceRect, Color.White);
             spriteBatch.DrawString(font, "SCORE:  " + score, new Vector2(100, 700), Color.White);
             spriteBatch.DrawString(font, "HEALTH:  " + health, new Vector2(1200, 700), Color.White);
-            if (Game.level == 4)
-            {
-                spriteBatch.Draw(Oxytexture, new Vector2(550, 700), Color.White);
-            }
+            
             foreach (var thisthing in Game.Things)
             {
                 if (thisthing is NonFlyer)
