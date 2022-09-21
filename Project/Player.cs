@@ -353,7 +353,7 @@ namespace Project
                 }
 
             }
-            spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
+            //spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
 
 
 
@@ -387,6 +387,7 @@ namespace Project
 
             if (Position.Y >= 900)
             {
+                health = 0;
                 Game.dead = true;
             }
             if (Position.X >= 4000)

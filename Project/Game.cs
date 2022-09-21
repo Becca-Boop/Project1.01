@@ -17,27 +17,27 @@ namespace Project
         public static bool paused = false;
         public static bool restart = false;
         GraphicsDeviceManager graphics;
-        public SpriteBatch spriteBatch;
-        public Texture2D PlayerSprite;
-        public Texture2D BlockSprite;
-        public Texture2D fishSprite;
-        public Texture2D BubbleSprite;
-        public Texture2D EmptySprite;
-        public Texture2D PuffinSprite;
-        public Texture2D SealSprite;
-        public Texture2D KangarooSprite;
-        public Texture2D WombatSprite;
-        public Texture2D RatSprite;
-        public Texture2D SpiderSprite;
-        public Texture2D JellyfishSprite;
-        public Texture2D StarfishSprite;
-        public Texture2D SharkSprite;
-        public Texture2D MonkeySprite;
-        public Texture2D DogSprite;
-        public Texture2D FlyerEnemy1;
-        public Texture2D FlyerEnemy2;
-        public Texture2D NonFlyerEnemy1;
-        public Texture2D NonFlyerEnemy2;
+        protected SpriteBatch spriteBatch;
+        protected Texture2D PlayerSprite;
+        protected Texture2D BlockSprite;
+        protected Texture2D fishSprite;
+        protected Texture2D BubbleSprite;
+        protected Texture2D EmptySprite;
+        protected Texture2D PuffinSprite;
+        protected Texture2D SealSprite;
+        protected Texture2D KangarooSprite;
+        protected Texture2D WombatSprite;
+        protected Texture2D RatSprite;
+        protected Texture2D SpiderSprite;
+        protected Texture2D JellyfishSprite;
+        protected Texture2D StarfishSprite;
+        protected Texture2D SharkSprite;
+        protected Texture2D MonkeySprite;
+        protected Texture2D DogSprite;
+        protected Texture2D FlyerEnemy1;
+        protected Texture2D FlyerEnemy2;
+        protected Texture2D NonFlyerEnemy1;
+        protected Texture2D NonFlyerEnemy2;
 
 
 
@@ -58,11 +58,11 @@ namespace Project
         private Texture2D l5background3;
 
 
-        public Texture2D PauseOverlay;
-        public Texture2D PauseOverlayController;
-        public Texture2D DeathScreen;
-        public Texture2D WinScreen1;
-        public Texture2D WinScreen2;
+        protected Texture2D PauseOverlay;
+        protected Texture2D PauseOverlayController;
+        protected Texture2D DeathScreen;
+        protected Texture2D WinScreen1;
+        protected Texture2D WinScreen2;
         public Texture2D OxygenEmpty;
         public Texture2D Oxygen20;
         public Texture2D Oxygen40;

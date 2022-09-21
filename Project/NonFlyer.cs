@@ -38,7 +38,7 @@ namespace Project
 
         public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (!Game.paused)
+            if (!Game.paused && !Game.dead && !Game.Win)
             {
                 if (dir == 1)
                 {
