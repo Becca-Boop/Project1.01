@@ -189,10 +189,7 @@ namespace Project
                         delay = (long)totalElapsed / 80;
                     }
                 }
-                if (Collider is Block || Collider is fish || Collider is Bubbles || Collider is LevelEnd) //check if being attacked
-                {
-                    health--;
-                }
+                
 
                 if (Collider == null)
                 {

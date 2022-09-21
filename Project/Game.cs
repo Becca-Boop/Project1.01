@@ -75,6 +75,7 @@ namespace Project
         public List<Thing> DeadThings;
         public bool dead;
         public bool Win;
+        bool fishempty = false;
         public Vector2 Offset;
         int count = 0;
         public const int WIDTH = 1440;
@@ -691,6 +692,20 @@ namespace Project
             else
             {
                 count = 0;
+            }
+
+            fishempty = true;
+            foreach (var Thing in Things)
+            {
+                if (Thing is fish)
+                {
+                    fishempty = false;
+                }
+            }
+
+            if (fishempty)
+            {
+                Win = true;
             }
         }
 
