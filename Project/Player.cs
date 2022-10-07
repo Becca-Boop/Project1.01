@@ -58,10 +58,8 @@ namespace Project
 
         public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
-
-
-            if (!Game.paused && !Game.dead && !Game.Win && Game.level == 4)
+            
+            if (!Game.Menu && !Game.paused && !Game.dead && !Game.Win && Game.level == 4)
             {
                 // Handle timing issues
                 float elapsed = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -211,7 +209,7 @@ namespace Project
                 // Now draw it
                 sourceRect = new Rectangle(42 * frames, 0, 42, 60);
             }
-            else if (!Game.paused && !Game.dead && !Game.Win)
+            else if (!Game.Menu && !Game.paused && !Game.dead && !Game.Win)
             {
                 // Handle timing issues
                 float elapsed = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -263,7 +261,7 @@ namespace Project
                     float increase = (float)(count * 0.009);
 
                     div = 4 + (int)increase;
-                    count++;
+                    count++;                    
                 }
                 else
                 {
@@ -355,7 +353,13 @@ namespace Project
             }
             //spriteBatch.DrawString(font, "DEBUG:  " + debug, new Vector2(100, 750), Color.White);
 
-
+            if (Game.Menu)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter) || GamePad.GetState(0).IsButtonDown(Buttons.A))
+                {
+                    Game.Menu = false;
+                }                
+            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) || GamePad.GetState(0).IsButtonDown(Buttons.Start))
             {

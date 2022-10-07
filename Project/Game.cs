@@ -18,6 +18,7 @@ namespace Project
         public static bool restart = false;
         GraphicsDeviceManager graphics;
         protected SpriteBatch spriteBatch;
+        protected Texture2D MenuScreen;
         protected Texture2D PlayerSprite;
         protected Texture2D BlockSprite;
         protected Texture2D fishSprite;
@@ -80,6 +81,8 @@ namespace Project
         int count = 0;
         public const int WIDTH = 1440;
         public const int HEIGHT = 810;
+        public bool Menu = true;
+
 
         public Player Player;
 
@@ -124,15 +127,18 @@ namespace Project
                 restart = false;
             }
 
+            MenuScreen = Content.Load<Texture2D>("Menu Screen");
+
+            
             Random Level = new Random();
             level = Level.Next(1, 6);
 
             dead = false;
-            Win = false; 
+            Win = false;
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             PlayerSprite = Content.Load<Texture2D>("SPSS");
-            BlockSprite = Content.Load<Texture2D>("block" +  level);
+            BlockSprite = Content.Load<Texture2D>("block" + level);
             fishSprite = Content.Load<Texture2D>("fish");
             BubbleSprite = Content.Load<Texture2D>("Bubbles");
             PuffinSprite = Content.Load<Texture2D>("puffinplaceholder");
@@ -237,7 +243,7 @@ namespace Project
                 NonFlyerEnemy1 = null;
                 NonFlyerEnemy2 = null;
             }
-            
+
 
             if (level != 4)
             {
@@ -248,7 +254,7 @@ namespace Project
                 Things.Add(new Block(this, BlockSprite, new Vector2(272, 566), new Rectangle(0, 0, 64, 64)));
                 Things.Add(new Block(this, BlockSprite, new Vector2(336, 566), new Rectangle(0, 0, 64, 64)));
             }
-            
+
 
             int blockoffsetX = 400;
             int blockoffsetY = 54;
@@ -527,7 +533,7 @@ namespace Project
                 bool placepossible = true;  // can we place a block here?
                 bool maxheight = false;  // true when we have max number of blocks
 
-                
+
 
                 for (int y = Y; y > 0; y--)
                 {
@@ -602,11 +608,11 @@ namespace Project
                             //{
                             //    enemy2 = NonFlyerEnemy2;
                             //}
-                            
+
 
                             if (rnd.Next(0, 2) == 0)
-                            {                            
-                                if(enemy1 == NonFlyerEnemy1)
+                            {
+                                if (enemy1 == NonFlyerEnemy1)
                                     Things.Add(new NonFlyer(this, enemy1, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
                             }
                             else
@@ -618,7 +624,7 @@ namespace Project
                         else
                         {
                             Things.Add(new fish(this, fishSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
-                        }                        
+                        }
                         placepossible = false; //stops it from placing the block
                     }
                     //else if (rnd.Next(0, 10) > 10 - y)
@@ -650,13 +656,13 @@ namespace Project
             if (rnd.Next(0, 2) == 0)
             {
                 if (enemy1 != NonFlyerEnemy1)
-                    Things.Add(new Flyer(this, enemy1, new Vector2(rnd.Next(0,8) * size , rnd.Next(0, 12) * size), new Rectangle(0, 0, 40, 40)));
+                    Things.Add(new Flyer(this, enemy1, new Vector2(rnd.Next(0, 8) * size, rnd.Next(0, 12) * size), new Rectangle(0, 0, 40, 40)));
             }
             else
             {
                 if (enemy2 == FlyerEnemy2)
                     Things.Add(new Flyer(this, enemy2, new Vector2(rnd.Next(0, 8) * size, rnd.Next(0, 12) * size), new Rectangle(0, 0, 40, 40)));
-            }            
+            }
 
 
             Player = new Player(this, PlayerSprite, new Vector2(PlayerposX, PlayerposY), new Rectangle(2, 2, 35, 48), font, snowballSprite);
@@ -664,7 +670,7 @@ namespace Project
 
 
             Things.Add(new LevelEnd(this, BubbleSprite, new Vector2(4000, 500), new Rectangle(0, 0, 40, 40))); //change texture from bubbles
-
+            
         }
 
 
@@ -675,7 +681,7 @@ namespace Project
         protected override void Update(GameTime gameTime)
         {
 
-            if (paused || dead || Win)
+            if (Menu || paused || dead || Win)
             {
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                     Exit();
@@ -746,7 +752,11 @@ namespace Project
                 else
                     spriteBatch.Draw(PauseOverlay, Vector2.Zero, Color.White);
             }
-
+             
+            if (Menu)
+            {
+                spriteBatch.Draw(MenuScreen, Vector2.Zero, Color.White);
+            }
             if (dead)
             {
                 spriteBatch.Draw(DeathScreen, Vector2.Zero, Color.White);
