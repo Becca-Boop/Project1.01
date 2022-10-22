@@ -171,7 +171,6 @@ namespace Project
                     Position.Y -= inc;
                 }
 
-                Collider = this.IsColliding(Game);
                 if (dir != 0)
                 {
                     //debug += " dir=" + dir;
@@ -182,6 +181,8 @@ namespace Project
                     int inc = (int)elapsed / div * dir;
                     // Dip a toe in
                     BigBoundingBox.X += inc;
+                    Collider = this.IsColliding(Game);
+
 
                     if (Collider is Block)
                     {
@@ -295,7 +296,6 @@ namespace Project
                     Position.Y -= inc;
                 }
 
-                Collider = this.IsColliding(Game);
                 if (dir != 0)
                 {
                     //debug += " dir=" + dir;
@@ -315,6 +315,8 @@ namespace Project
                     int inc = (int)elapsed / div * dir;
                     // Dip a toe in
                     BigBoundingBox.X += inc;
+                    Collider = this.IsColliding(Game);
+
 
                     if (Collider is Block)
                     {

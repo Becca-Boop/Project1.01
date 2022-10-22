@@ -28,23 +28,36 @@ namespace Project
             BigBoundingBox = new Rectangle(LittleBoundingBox.X + (int)Position.X, LittleBoundingBox.Y + (int)Position.Y, LittleBoundingBox.Width, LittleBoundingBox.Height);
         }
 
+        //public Thing IsColliding(Game Game)
+        //{
+        //    foreach (var Thing in Game.Things)
+        //    {
+        //        if (Thing is Background)
+        //        {
+        //        }
+        //        else
+        //        {
+        //            if (this.IsColliding(Thing))
+        //            {
+        //                return Thing;
+        //            }
+        //        }
+        //    }
+        //    return null;
+        //}
+
         public Thing IsColliding(Game Game)
         {
             foreach (var Thing in Game.Things)
             {
-                if (Thing is Background)
+                if (this.IsColliding(Thing))
                 {
-                }
-                else
-                {
-                    if (this.IsColliding(Thing))
-                    {
-                        return Thing;
-                    }
+                    return Thing;
                 }
             }
             return null;
         }
+
 
 
         public bool IsColliding(Thing otherThing)
