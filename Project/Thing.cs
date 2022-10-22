@@ -46,6 +46,7 @@ namespace Project
             return null;
         }
 
+
         public bool IsColliding(Thing otherThing)
         {
             if (otherThing == this)
