@@ -12,11 +12,10 @@ namespace Project
 {
     class Flyer : Enemy
     {
+
         public Flyer(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
         {
-            ignoreBlocks = true;
         }
-
 
 
         public override Vector2 GetMove(float dt)
@@ -30,5 +29,7 @@ namespace Project
             Vector2 moveVector = new Vector2(-moveDir.X * dt / 10, -moveDir.Y * dt / 10);
             return moveVector;
         }
+
+
     }
 }

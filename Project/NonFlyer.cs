@@ -19,11 +19,11 @@ namespace Project
 
 
 
-
-
         public NonFlyer(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
         {
         }
+
+
 
         public override Vector2 GetMove(float dt)
         {

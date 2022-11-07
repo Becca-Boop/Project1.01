@@ -30,7 +30,7 @@ namespace Project
         public bool Controller;
         SpriteFont font;
         public int score;
-        Vector2 Length = new Vector2(0,0);
+        Vector2 Length = new Vector2(0, 0);
         int count = 0;
         Texture2D Oxytexture;
         bool attack = false;
@@ -58,7 +58,7 @@ namespace Project
 
         public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            
+
             if (!Game.Menu && !Game.paused && !Game.dead && !Game.Win && Game.level == 4)
             {
                 // Handle timing issues
@@ -67,7 +67,7 @@ namespace Project
                 long delay = (long)totalElapsed / 80;
                 debug = "";
 
-               
+
                 airtime = totalElapsed - airstarttime;
                 if (airtime >= 10000)
                 {
@@ -76,44 +76,6 @@ namespace Project
                 airtimepercent = airtime / 1000;
                 Math.Round(airtimepercent, 0);
                 airtimepercent = (int)airtimepercent;
-                //debug += (int)airtimepercent;
-
-                //switch((int)airtimepercent)
-                //{
-                //    case 10:
-                //        Oxytexture = Game.OxygenEmpty;
-                //        break;
-                //    case 9:
-                //        Oxytexture = Game.OxygenEmpty;
-                //        break;
-                //    case 8:
-                //        Oxytexture = Game.Oxygen20;
-                //        break;
-                //    case 7:
-                //        Oxytexture = Game.Oxygen20;
-                //        break;
-                //    case 6:
-                //        Oxytexture = Game.Oxygen40;
-                //        break;
-                //    case 5:
-                //        Oxytexture = Game.Oxygen40;
-                //        break;
-                //    case 4:
-                //        Oxytexture = Game.Oxygen60;
-                //        break;
-                //    case 3:
-                //        Oxytexture = Game.Oxygen60;
-                //        break;
-                //    case 2:
-                //        Oxytexture = Game.Oxygen80;
-                //        break;
-                //    case 1:
-                //        Oxytexture = Game.Oxygen80;
-                //        break;
-                //    default:
-                //        Oxytexture = Game.OxygenFull;
-                //        break;
-                //}
                 airtimepercent = 5 - (int)airtime / 2000;
                 //debug += airtimepercent;
                 Oxytexture = Game.Oxygen[(int)airtimepercent];
@@ -148,10 +110,10 @@ namespace Project
                     isjumping = false;
                 }
 
-                
+
                 // Determine horizontal speed modifier
-                int div = 7;                              
-                            
+                int div = 7;
+
 
 
                 // Vertical movement (ignores frames)
@@ -165,7 +127,7 @@ namespace Project
                 }
                 if (isjumping)
                 {
-                    double jumpTime = totalElapsed - jumpStartTime;                    
+                    double jumpTime = totalElapsed - jumpStartTime;
                     int inc = (int)(elapsed * 30 / (jumpTime + 10));
                     BigBoundingBox.Y -= inc;
                     Position.Y -= inc;
@@ -175,7 +137,7 @@ namespace Project
                 {
                     //debug += " dir=" + dir;
                     // Select the frame
-                    frames = dir == -1 ? 0 : 12;                    
+                    frames = dir == -1 ? 0 : 12;
 
                     // Horizontal movement
                     int inc = (int)elapsed / div * dir;
@@ -195,7 +157,7 @@ namespace Project
                         delay = (long)totalElapsed / 80;
                     }
                 }
-                
+
 
                 if (Collider == null)
                 {
@@ -269,7 +231,7 @@ namespace Project
                     float increase = (float)(count * 0.009);
 
                     div = 4 + (int)increase;
-                    count++;                    
+                    count++;
                 }
                 else
                 {
@@ -316,6 +278,7 @@ namespace Project
                     // Dip a toe in
                     BigBoundingBox.X += inc;
                     Collider = this.IsColliding(Game);
+                    //if (Collider != null) Console.WriteLine("Collided with " + Collider.GetType());
 
 
                     if (Collider is Block)
@@ -351,12 +314,12 @@ namespace Project
             spriteBatch.Draw(Texture, CENTRE, sourceRect, Color.White);
             spriteBatch.DrawString(font, "SCORE:  " + score, new Vector2(100, 700), Color.White);
             spriteBatch.DrawString(font, "HEALTH:  " + health, new Vector2(1200, 700), Color.White);
-            
+
             foreach (var thisthing in Game.Things)
             {
                 if (thisthing is NonFlyer)
                 {
-                   // debug += thisthing.Position.X + "    ";
+                    // debug += thisthing.Position.X + "    ";
                 }
 
             }
@@ -367,7 +330,7 @@ namespace Project
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter) || GamePad.GetState(0).IsButtonDown(Buttons.A))
                 {
                     Game.Menu = false;
-                }                
+                }
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) || GamePad.GetState(0).IsButtonDown(Buttons.Start))
@@ -418,16 +381,16 @@ namespace Project
             //}
 
             if (attack)
-            {                
+            {
                 //Shoot();                
             }
 
         }
 
         public override double IsInRange(Thing otherThing)
-        {            
+        {
             Length = Position - (otherThing.Position - Game.Offset);
-            double Distance = ((Length.X)* (Length.X)) + ((Length.Y) * (Length.Y));
+            double Distance = ((Length.X) * (Length.X)) + ((Length.Y) * (Length.Y));
             Distance = Math.Sqrt(Distance);
             //debug += Distance;
             return Distance;

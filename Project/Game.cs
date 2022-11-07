@@ -45,6 +45,8 @@ namespace Project
         private Texture2D[] levelBackgrounds1 = new Texture2D[7];
         private Texture2D[] levelBackgrounds2 = new Texture2D[7];
         private Texture2D[] levelBackgrounds3 = new Texture2D[7];
+        public Texture2D[] Oxygen = new Texture2D[5];
+
 
 
 
