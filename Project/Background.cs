@@ -23,5 +23,11 @@ namespace Project
         {
             spriteBatch.Draw(Texture, Position - (Game.Offset / 2), LittleBoundingBox, Color.White);
         }
+
+        public Thing IsColliding(Game Game)
+        {
+            return null;
+        }
+
     }
 }

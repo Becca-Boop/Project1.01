@@ -75,43 +75,50 @@ namespace Project
                 }
                 airtimepercent = airtime / 1000;
                 Math.Round(airtimepercent, 0);
+                airtimepercent = (int)airtimepercent;
                 //debug += (int)airtimepercent;
-                switch((int)airtimepercent)
-                {
-                    case 10:
-                        Oxytexture = Game.OxygenEmpty;
-                        break;
-                    case 9:
-                        Oxytexture = Game.OxygenEmpty;
-                        break;
-                    case 8:
-                        Oxytexture = Game.Oxygen20;
-                        break;
-                    case 7:
-                        Oxytexture = Game.Oxygen20;
-                        break;
-                    case 6:
-                        Oxytexture = Game.Oxygen40;
-                        break;
-                    case 5:
-                        Oxytexture = Game.Oxygen40;
-                        break;
-                    case 4:
-                        Oxytexture = Game.Oxygen60;
-                        break;
-                    case 3:
-                        Oxytexture = Game.Oxygen60;
-                        break;
-                    case 2:
-                        Oxytexture = Game.Oxygen80;
-                        break;
-                    case 1:
-                        Oxytexture = Game.Oxygen80;
-                        break;
-                    default:
-                        Oxytexture = Game.OxygenFull;
-                        break;
-                }
+
+                //switch((int)airtimepercent)
+                //{
+                //    case 10:
+                //        Oxytexture = Game.OxygenEmpty;
+                //        break;
+                //    case 9:
+                //        Oxytexture = Game.OxygenEmpty;
+                //        break;
+                //    case 8:
+                //        Oxytexture = Game.Oxygen20;
+                //        break;
+                //    case 7:
+                //        Oxytexture = Game.Oxygen20;
+                //        break;
+                //    case 6:
+                //        Oxytexture = Game.Oxygen40;
+                //        break;
+                //    case 5:
+                //        Oxytexture = Game.Oxygen40;
+                //        break;
+                //    case 4:
+                //        Oxytexture = Game.Oxygen60;
+                //        break;
+                //    case 3:
+                //        Oxytexture = Game.Oxygen60;
+                //        break;
+                //    case 2:
+                //        Oxytexture = Game.Oxygen80;
+                //        break;
+                //    case 1:
+                //        Oxytexture = Game.Oxygen80;
+                //        break;
+                //    default:
+                //        Oxytexture = Game.OxygenFull;
+                //        break;
+                //}
+                airtimepercent = 5 - (int)airtime / 2000;
+                //debug += airtimepercent;
+                Oxytexture = Game.Oxygen[(int)airtimepercent];
+                spriteBatch.Draw(Oxytexture, new Vector2(550, 700), Color.White);
+
                 spriteBatch.Draw(Oxytexture, new Vector2(550, 700), Color.White);
 
 
@@ -164,7 +171,6 @@ namespace Project
                     Position.Y -= inc;
                 }
 
-                Collider = this.IsColliding(Game);
                 if (dir != 0)
                 {
                     //debug += " dir=" + dir;
@@ -175,6 +181,8 @@ namespace Project
                     int inc = (int)elapsed / div * dir;
                     // Dip a toe in
                     BigBoundingBox.X += inc;
+                    Collider = this.IsColliding(Game);
+
 
                     if (Collider is Block)
                     {
@@ -288,7 +296,6 @@ namespace Project
                     Position.Y -= inc;
                 }
 
-                Collider = this.IsColliding(Game);
                 if (dir != 0)
                 {
                     //debug += " dir=" + dir;
@@ -308,6 +315,8 @@ namespace Project
                     int inc = (int)elapsed / div * dir;
                     // Dip a toe in
                     BigBoundingBox.X += inc;
+                    Collider = this.IsColliding(Game);
+
 
                     if (Collider is Block)
                     {

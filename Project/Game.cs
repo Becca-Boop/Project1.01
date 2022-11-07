@@ -47,6 +47,7 @@ namespace Project
         private Texture2D[] levelBackgrounds3 = new Texture2D[7];
 
 
+
         protected Texture2D PauseOverlay;
         protected Texture2D PauseOverlayController;
         protected Texture2D DeathScreen;
@@ -72,7 +73,10 @@ namespace Project
         public bool Menu = true;
 
 
-        public Player Player;
+
+
+
+    public Player Player;
 
         SpriteFont font;
 
@@ -168,6 +172,16 @@ namespace Project
             OxygenFull = Content.Load<Texture2D>("Oxygen full");
             underwatereffect = Content.Load<Texture2D>("underwater");
             snowballSprite = Content.Load<Texture2D>("Snowball");
+
+            Oxygen = new Texture2D[]
+            {
+                Content.Load<Texture2D>("Oxygen empty"),
+                Content.Load<Texture2D>("Oxygen 20"),
+                Content.Load<Texture2D>("Oxygen 40"),
+                Content.Load<Texture2D>("Oxygen 60"),
+                Content.Load<Texture2D>("Oxygen 80"),
+                Content.Load<Texture2D>("Oxygen full"),
+            };
 
 
 
