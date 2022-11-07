@@ -12,124 +12,23 @@ namespace Project
 {
     class Flyer : Enemy
     {
-        bool counted = false;
-        int state = 1;
-        bool Xnewdirection = true;
-        bool Ynewdirection = true;
-        int X = 0;
-        int Y = 0;
-        int dirx = 0;
-        int diry = 0;
-        Thing Collider;
-        SpriteEffects s = SpriteEffects.None;
-
         public Flyer(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
         {
+            ignoreBlocks = true;
         }
 
-        public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
+
+
+        public override Vector2 GetMove(float dt)
         {
-            if (!Game.paused && !Game.dead && !Game.Win)
-            {
-                float dt = (float)Game.Player.totalElapsed;
-
-                Vector2 moveDir = Position - Game.Player.Position;
-                moveDir.Normalize();
-                float distance = Vector2.Distance(Position, Game.Player.Position);
-                if (moveDir.X < 0.5)
-                {
-                    s = SpriteEffects.FlipHorizontally;
-                }
-                else
-                {
-                    s = SpriteEffects.None;
-                }
-
-                if (state == 0)
-                {
-                    if (distance < 600 && distance > 10)
-                    {
-                        state = 1;
-                    }
-                    else
-                    {                        
-                        Random rnd = new Random();
-
-                        if (!Game.paused && !Game.dead && !Game.Win)
-                        {
-                            if (Xnewdirection)
-                            {
-                                dirx = rnd.Next(-1, 2);
-                            }
-                            int Xlength = rnd.Next(1, 24);
+            Vector2 moveDir = Position - Game.Player.Position;
 
 
-                            if (X < Xlength)
-                            {
-                                // Horizontal movement
-                                int inc = 4 * dirx;
-                                Position.X += inc;
-                                X++;
-                            }
-                            int XDirChange = rnd.Next(1, 10);
-                            if (XDirChange == 1)
-                            {
-                                Xnewdirection = true;
-                                X = 0;
-                            }
-                            else
-                            {
-                                Xnewdirection = false;
-                            }
+            moveDir.Normalize();
+            float distance = Vector2.Distance(Position, Game.Player.Position);
 
-
-
-                            if (Ynewdirection)
-                            {
-                                diry = rnd.Next(-1, 2);
-                            }
-                            int Ylength = rnd.Next(1, 24);
-
-                            if (Y < Ylength)
-                            {
-                                // Vertical movement
-                                int inc = 4 * diry;
-                                Position.Y += inc;
-                                Y++;
-                            }
-                            int YDirChange = rnd.Next(1, 10);
-                            if (YDirChange == 1)
-                            {
-                                Ynewdirection = true;
-                                Y = 0;
-                            }
-                            else
-                            {
-                                Ynewdirection = false;
-                            }
-
-                            Collider = this.IsColliding(Game);
-                            if (Collider is Player)
-                            {
-                                Game.Player.health--;
-                            }
-                        }
-                    }
-                }
-                else if (state == 1)
-                {
-                    Position -= moveDir * 3;
-                    state = 0;
-                }
-            }
-            spriteBatch.Draw(Texture, Position - Game.Offset, LittleBoundingBox, Color.White, 0f, Vector2.Zero, Vector2.One, s, 0f);
-        }
-
-        public override void Collision(Thing otherThing)
-        {
-            {
-                Game.Player.health--;
-            }
+            Vector2 moveVector = new Vector2(-moveDir.X * dt / 10, -moveDir.Y * dt / 10);
+            return moveVector;
         }
     }
 }

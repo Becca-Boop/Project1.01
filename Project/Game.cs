@@ -42,21 +42,9 @@ namespace Project
 
 
 
-        private Texture2D l1background1;
-        private Texture2D l1background2;
-        private Texture2D l1background3;
-        private Texture2D l2background1;
-        private Texture2D l2background2;
-        private Texture2D l2background3;
-        private Texture2D l3background1;
-        private Texture2D l3background2;
-        private Texture2D l3background3;
-        private Texture2D l4background1;
-        private Texture2D l4background2;
-        private Texture2D l4background3;
-        private Texture2D l5background1;
-        private Texture2D l5background2;
-        private Texture2D l5background3;
+        private Texture2D[] levelBackgrounds1 = new Texture2D[7];
+        private Texture2D[] levelBackgrounds2 = new Texture2D[7];
+        private Texture2D[] levelBackgrounds3 = new Texture2D[7];
 
 
         protected Texture2D PauseOverlay;
@@ -96,11 +84,11 @@ namespace Project
         public Game()
         {
             graphics = new GraphicsDeviceManager(this);
+            Window.IsBorderless = true;
             graphics.PreferredBackBufferWidth = WIDTH;
             graphics.PreferredBackBufferHeight = HEIGHT;
             graphics.ApplyChanges();
             Content.RootDirectory = "Content";
-            Window.IsBorderless = false;
             Window.Position = new Point((graphics.GraphicsDevice.Adapter.CurrentDisplayMode.Width - WIDTH) / 2, (graphics.GraphicsDevice.Adapter.CurrentDisplayMode.Height - HEIGHT) / 2 - 30);
             graphics.ApplyChanges();
         }
@@ -154,21 +142,18 @@ namespace Project
             DogSprite = Content.Load<Texture2D>("spacedog");
             //EmptySprite = Content.Load<Texture2D>("emptysprite");
 
-            l1background1 = Content.Load<Texture2D>("Background1");
-            l1background2 = Content.Load<Texture2D>("Background2");
-            l1background3 = Content.Load<Texture2D>("Background3");
-            l2background1 = Content.Load<Texture2D>("Background4");
-            l2background2 = Content.Load<Texture2D>("Background5");
-            l2background3 = Content.Load<Texture2D>("Background6");
-            l3background1 = Content.Load<Texture2D>("Background7");
-            l3background2 = Content.Load<Texture2D>("Background8");
-            l3background3 = Content.Load<Texture2D>("Background9");
-            l4background1 = Content.Load<Texture2D>("Background10");
-            l4background2 = Content.Load<Texture2D>("Background11");
-            l4background3 = Content.Load<Texture2D>("Background12");
-            l5background1 = Content.Load<Texture2D>("Background13");
-            l5background2 = Content.Load<Texture2D>("Background14");
-            l5background3 = Content.Load<Texture2D>("Background15");
+            for (int i = 1; i < 6; i++)
+            {
+                levelBackgrounds1[i] = Content.Load<Texture2D>("Background" + (i * 3 - 2));
+                levelBackgrounds2[i] = Content.Load<Texture2D>("Background" + (i * 3 - 1));
+                levelBackgrounds3[i] = Content.Load<Texture2D>("Background" + (i * 3));
+            }
+            Things.Add(new Background(this, levelBackgrounds1[level], new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
+
+            Things.Add(new Background(this, levelBackgrounds2[level], new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
+
+            Things.Add(new Background(this, levelBackgrounds3[level], new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
+
             PauseOverlay = Content.Load<Texture2D>("Pause Menu");
             PauseOverlayController = Content.Load<Texture2D>("Pause Menu Controller");
             font = Content.Load<SpriteFont>("Score");
@@ -188,12 +173,10 @@ namespace Project
 
 
             Random rnd = new Random();
-            if (level == 1)
-            {
-                Things.Add(new Background(this, l1background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
-                Things.Add(new Background(this, l1background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
-                Things.Add(new Background(this, l1background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
 
+        
+            if (level == 1)
+            {                
                 FlyerEnemy1 = PuffinSprite;
                 FlyerEnemy2 = null;
                 NonFlyerEnemy1 = SealSprite;
@@ -201,10 +184,6 @@ namespace Project
             }
             else if (level == 2)
             {
-                Things.Add(new Background(this, l2background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
-                Things.Add(new Background(this, l2background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
-                Things.Add(new Background(this, l2background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
-
                 FlyerEnemy1 = null;
                 FlyerEnemy2 = null;
                 NonFlyerEnemy1 = KangarooSprite;
@@ -212,10 +191,6 @@ namespace Project
             }
             else if (level == 3)
             {
-                Things.Add(new Background(this, l3background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
-                Things.Add(new Background(this, l3background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
-                Things.Add(new Background(this, l3background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
-
                 FlyerEnemy1 = null;
                 FlyerEnemy2 = null;
                 NonFlyerEnemy1 = RatSprite;
@@ -223,21 +198,13 @@ namespace Project
             }
             else if (level == 4)
             {
-                Things.Add(new Background(this, l4background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
-                Things.Add(new Background(this, l4background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
-                Things.Add(new Background(this, l4background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
-
                 FlyerEnemy1 = JellyfishSprite;
                 FlyerEnemy2 = SharkSprite;
                 NonFlyerEnemy1 = null;
                 NonFlyerEnemy2 = null;
             }
             else if (level == 5)
-            {
-                Things.Add(new Background(this, l5background1, new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
-                Things.Add(new Background(this, l5background2, new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
-                Things.Add(new Background(this, l5background3, new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
-
+            {                
                 FlyerEnemy1 = MonkeySprite;
                 FlyerEnemy2 = DogSprite;
                 NonFlyerEnemy1 = null;
