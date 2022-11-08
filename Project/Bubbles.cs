@@ -27,9 +27,9 @@ namespace Project
 
         public override void Collision(Thing otherThing)
         {
-                            
-            Game.Player.airstarttime = Game.Player.totalElapsed;                
-            
+
+            Game.Player.airstarttime = Game.Player.totalElapsed;
+
         }
     }
 }

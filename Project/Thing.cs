@@ -18,6 +18,7 @@ namespace Project
         public Rectangle BigBoundingBox;
         protected Rectangle sourceRect;
         public Game Game;
+        public bool collision;
 
         public Thing(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox)
         {
@@ -26,6 +27,7 @@ namespace Project
             Position = _position;
             LittleBoundingBox = _boundingBox;
             BigBoundingBox = new Rectangle(LittleBoundingBox.X + (int)Position.X, LittleBoundingBox.Y + (int)Position.Y, LittleBoundingBox.Width, LittleBoundingBox.Height);
+            collision = true;
         }
 
         //public Thing IsColliding(Game Game)
@@ -62,7 +64,7 @@ namespace Project
 
         public bool IsColliding(Thing otherThing)
         {
-            if (otherThing == this)
+            if (otherThing == this || !otherThing.collision)
             {
                 return false;
             }
