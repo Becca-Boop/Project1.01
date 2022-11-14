@@ -65,6 +65,7 @@ namespace Project
         public Texture2D snowballSprite;
         public List<Thing> Things = new List<Thing>();
         public List<Thing> DeadThings;
+        public List<Thing> BlockLocations = new List<Thing>();
         public bool dead;
         public bool Win;
         bool fishempty = false;
@@ -458,6 +459,8 @@ namespace Project
 
                 PlayerposX = -100;
                 PlayerposY = 200;
+
+                
             }
 
 
@@ -654,6 +657,13 @@ namespace Project
 
             Things.Add(new LevelEnd(this, BubbleSprite, new Vector2(4000, 500), new Rectangle(0, 0, 40, 40))); //change texture from bubbles
             
+            foreach (var item in Things)
+            {
+                if (item is Block)
+                {
+                    BlockLocations.Add(item);
+                }
+            }
         }
 
 

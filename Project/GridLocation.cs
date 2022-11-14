@@ -14,59 +14,22 @@ namespace Project
 {
     public class GridLocation
     {
-        public bool filled, impassable, unPathable, hasBeenUsed, isViewable;
-        public float fScore, cost, currentDist, distLef;
-        public Vector2 parent, pos;
+        public Vector2 Position;
+        protected Texture2D Texture;
+        public Rectangle LittleBoundingBox;
+        public Rectangle BigBoundingBox;
+        protected Rectangle sourceRect;
+        public Game Game;
+        public bool collision;
 
-        public GridLocation()
+        public GridLocation(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox)
         {
-            filled = false;
-            impassable = false;
-            unPathable = false;
-            hasBeenUsed = false;
-            isViewable = false;
-            cost = 1.0f;
-
+            Game = game;
+            Texture = _texture;
+            Position = _position;
+            LittleBoundingBox = _boundingBox;
+            BigBoundingBox = new Rectangle(LittleBoundingBox.X + (int)Position.X, LittleBoundingBox.Y + (int)Position.Y, LittleBoundingBox.Width, LittleBoundingBox.Height);
+            collision = true;
         }
-
-        public GridLocation(float COST, bool FILLED)
-        {
-            cost = COST;
-            filled = FILLED;
-            unPathable = false;
-            hasBeenUsed = false;
-            isViewable = false;
-        }
-
-        public GridLocation(Vector2 POS, float COST, bool FILLED, float FSCORE)
-        {
-            cost = COST;
-            filled = FILLED;
-            unPathable = false;
-            hasBeenUsed = false;
-            isViewable = false;
-
-            pos = POS;
-
-            fScore = FSCORE;
-        }
-
-        public void SetNode(Vector2 PARENT, float FSCORE, float CURRENTDIST)
-        {
-            parent = PARENT;
-            fScore = FSCORE;
-            currentDist = CURRENTDIST;
-        }
-
-        public virtual void SetToFilled(bool IMPASSIBLE)
-        {
-            filled = true;
-            if (IMPASSIBLE)
-            {
-                impassable = true;
-            }
-        }
-
-
     }
 }
