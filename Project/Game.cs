@@ -41,10 +41,12 @@ namespace Project
         protected Texture2D NonFlyerEnemy2;
 
 
-
+        //creating arrays for the background images
         private Texture2D[] levelBackgrounds1 = new Texture2D[7];
         private Texture2D[] levelBackgrounds2 = new Texture2D[7];
         private Texture2D[] levelBackgrounds3 = new Texture2D[7];
+
+        //creating array for the oxygen bar in the water level
         public Texture2D[] Oxygen = new Texture2D[5];
 
 
@@ -65,7 +67,6 @@ namespace Project
         public Texture2D snowballSprite;
         public List<Thing> Things = new List<Thing>();
         public List<Thing> DeadThings;
-        public List<Thing> BlockLocations = new List<Thing>();
         public bool dead;
         public bool Win;
         bool fishempty = false;
@@ -77,16 +78,14 @@ namespace Project
 
 
 
-
-
-    public Player Player;
+        public Player Player;
 
         SpriteFont font;
 
         public int frameCount = 0;
         public int level;
         public int previouslevel;
-        
+
 
         public Game()
         {
@@ -115,22 +114,26 @@ namespace Project
         {
             if (restart)
             {
-                Things.Clear();
+                Things.Clear(); //delete everything from the game & start over
                 if (DeadThings != null)
                     DeadThings.Clear();
 
                 restart = false;
             }
 
-            MenuScreen = Content.Load<Texture2D>("Menu Screen");
 
-            
-            Random Level = new Random();
-            level = Level.Next(1, 6);
+
+
+
+            Random rnd = new Random();
+
+            level = rnd.Next(1, 6);
 
             dead = false;
             Win = false;
 
+            //Loading all assets/sprites
+            MenuScreen = Content.Load<Texture2D>("Menu Screen");
             spriteBatch = new SpriteBatch(GraphicsDevice);
             PlayerSprite = Content.Load<Texture2D>("SPSS");
             BlockSprite = Content.Load<Texture2D>("block" + level);
@@ -147,8 +150,8 @@ namespace Project
             SharkSprite = Content.Load<Texture2D>("shark");
             MonkeySprite = Content.Load<Texture2D>("spacemonkey");
             DogSprite = Content.Load<Texture2D>("spacedog");
-            //EmptySprite = Content.Load<Texture2D>("emptysprite");
 
+            //
             for (int i = 1; i < 6; i++)
             {
                 levelBackgrounds1[i] = Content.Load<Texture2D>("Background" + (i * 3 - 2));
@@ -167,15 +170,11 @@ namespace Project
             DeathScreen = Content.Load<Texture2D>("Death screen");
             WinScreen1 = Content.Load<Texture2D>("Win1");
             WinScreen2 = Content.Load<Texture2D>("Win2");
-            OxygenEmpty = Content.Load<Texture2D>("Oxygen empty");
-            Oxygen20 = Content.Load<Texture2D>("Oxygen 20");
-            Oxygen40 = Content.Load<Texture2D>("Oxygen 40");
-            Oxygen60 = Content.Load<Texture2D>("Oxygen 60");
-            Oxygen80 = Content.Load<Texture2D>("Oxygen 80");
-            OxygenFull = Content.Load<Texture2D>("Oxygen full");
             underwatereffect = Content.Load<Texture2D>("underwater");
             snowballSprite = Content.Load<Texture2D>("Snowball");
 
+
+            //filling the oxygen array with the correct bar percentage
             Oxygen = new Texture2D[]
             {
                 Content.Load<Texture2D>("Oxygen empty"),
@@ -188,12 +187,8 @@ namespace Project
 
 
 
-
-            Random rnd = new Random();
-
-        
             if (level == 1)
-            {                
+            {
                 FlyerEnemy1 = PuffinSprite;
                 FlyerEnemy2 = null;
                 NonFlyerEnemy1 = SealSprite;
@@ -221,7 +216,7 @@ namespace Project
                 NonFlyerEnemy2 = null;
             }
             else if (level == 5)
-            {                
+            {
                 FlyerEnemy1 = MonkeySprite;
                 FlyerEnemy2 = DogSprite;
                 NonFlyerEnemy1 = null;
@@ -231,17 +226,15 @@ namespace Project
 
             if (level != 4)
             {
-                Things.Add(new Block(this, BlockSprite, new Vector2(16, 566), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(80, 566), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(144, 566), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(208, 566), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(272, 566), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(336, 566), new Rectangle(0, 0, 64, 64)));
+                for (int i = 1; i < 6; i++)
+                {
+                    createBlock(i, 9);
+                }
             }
 
 
-            int blockoffsetX = 400;
-            int blockoffsetY = 54;
+            int blockoffsetX = 6;
+            int blockoffsetY = 1;
 
             int fishoffsetX = 415;
             int fishoffsetY = 69;
@@ -254,203 +247,16 @@ namespace Project
 
             if (level == 4)
             {
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -5, 64 * 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -5, 64 * 1), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -5, 64 * 2), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -5, 64 * 3), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -5, 64 * 4), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -5, 64 * 5), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -5, 64 * 6), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -5, 64 * 7), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -5, 64 * 8), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -5, 64 * 9), new Rectangle(0, 0, 64, 64)));
-
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 80, 64 * 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 80, 64 * 1), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 80, 64 * 2), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 80, 64 * 3), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 80, 64 * 4), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 80, 64 * 5), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 80, 64 * 6), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 80, 64 * 7), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 80, 64 * 8), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 80, 64 * 9), new Rectangle(0, 0, 64, 64)));
-
-
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -4, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -3, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -2, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -1, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 0, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 1, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 2, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 3, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 4, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 5, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 6, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 7, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 8, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 9, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 10, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 11, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 12, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 13, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 14, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 15, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 16, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 17, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 18, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 19, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 20, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 21, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 22, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 23, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 24, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 25, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 26, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 27, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 28, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 29, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 30, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 31, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 32, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 33, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 34, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 35, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 36, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 37, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 38, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 39, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 40, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 41, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 42, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 43, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 44, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 45, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 46, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 47, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 48, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 49, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 50, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 51, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 52, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 53, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 54, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 55, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 56, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 57, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 58, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 59, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 60, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 61, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 62, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 63, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 64, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 65, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 66, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 67, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 68, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 69, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 70, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 71, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 72, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 73, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 74, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 75, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 76, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 77, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 78, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 79, 0), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 80, 0), new Rectangle(0, 0, 64, 64)));
-
-
-
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -5, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -4, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -3, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -2, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * -1, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 0, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 1, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 2, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 3, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 4, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 5, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 6, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 7, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 8, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 9, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 10, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 11, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 12, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 13, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 14, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 15, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 16, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 17, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 18, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 19, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 20, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 21, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 22, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 23, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 24, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 25, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 26, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 27, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 28, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 29, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 30, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 31, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 32, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 33, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 34, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 35, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 36, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 37, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 38, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 39, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 40, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 41, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 42, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 43, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 44, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 45, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 46, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 47, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 48, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 49, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 50, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 51, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 52, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 53, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 54, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 55, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 56, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 57, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 58, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 59, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 60, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 61, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 62, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 63, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 64, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 65, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 66, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 67, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 68, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 69, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 70, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 71, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 72, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 73, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 74, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 75, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 76, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 77, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 78, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 79, 576), new Rectangle(0, 0, 64, 64)));
-                Things.Add(new Block(this, BlockSprite, new Vector2(64 * 80, 576), new Rectangle(0, 0, 64, 64)));
+                for (int i = 0; i < 10; i++)
+                {
+                    createBlock(-5, i);
+                    createBlock(80, i);
+                }
+                for (int i = -4; i < 81; i++)
+                {
+                    createBlock(i, 0);
+                    createBlock(i, 9);
+                }
 
                 blockoffsetX = 0;
                 blockoffsetY = 0;
@@ -459,18 +265,8 @@ namespace Project
 
                 PlayerposX = -100;
                 PlayerposY = 200;
-
-                
             }
 
-
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    int numberX = rnd.Next(0, 1440);
-            //    int numberY = rnd.Next(0, 810);
-            //    //Things.Add(new fish(this, fishSprite, new Vector2(numberX, numberY), new Rectangle(0, 0, 40, 40)));
-
-            //}
 
 
             int size = 64;
@@ -540,7 +336,7 @@ namespace Project
 
                         if (placepossible) //makes sure the block will be navigatable
                         {
-                            Things.Add(new Block(this, BlockSprite, new Vector2(x * size + blockoffsetX, y * size + blockoffsetY), new Rectangle(0, 0, size, size)));
+                            createBlock(x + blockoffsetX, y + blockoffsetY);
                             lastblockY = y;
                         }
                         placepossible = true;
@@ -553,49 +349,6 @@ namespace Project
                         }
                         else if (rnd.Next(0, 3) == 1)
                         {
-                            //if(rnd.Next(0,2) == 0 && FlyerEnemy1 != null)
-                            //    Things.Add(new Flyer(this, FlyerEnemy1, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
-                            //else if(rnd.Next(0, 4) == 1 && FlyerEnemy2 != null)
-                            //    Things.Add(new Flyer(this, FlyerEnemy2, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
-                            //else if (rnd.Next(0, 4) == 2 && NonFlyerEnemy1 != null)
-                            //    Things.Add(new NonFlyer(this, NonFlyerEnemy1, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
-                            //else if (rnd.Next(0, 4) == 3 && NonFlyerEnemy2 != null)
-                            //    Things.Add(new NonFlyer(this, NonFlyerEnemy2, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
-                            //Texture2D enemy1 = null;
-                            //Texture2D enemy2 = null;
-
-
-                            /////
-
-
-                            //if (FlyerEnemy1 != null)
-                            //{
-                            //    enemy1 = FlyerEnemy1;
-                            //}
-                            //else if (FlyerEnemy2 != null)
-                            //{
-                            //    enemy1 = FlyerEnemy2;
-                            //}
-                            //else if (NonFlyerEnemy1 != null)
-                            //{
-                            //    enemy1 = NonFlyerEnemy1;
-                            //}
-
-
-                            //if (FlyerEnemy2 != null && enemy1 != FlyerEnemy2)
-                            //{
-                            //    enemy2 = FlyerEnemy2;
-                            //}
-                            //else if (NonFlyerEnemy1 != null && enemy1 != NonFlyerEnemy1)
-                            //{
-                            //    enemy2 = NonFlyerEnemy1;
-                            //}
-                            //else if (NonFlyerEnemy2 != null)
-                            //{
-                            //    enemy2 = NonFlyerEnemy2;
-                            //}
-
-
                             if (rnd.Next(0, 2) == 0)
                             {
                                 if (enemy1 == NonFlyerEnemy1)
@@ -613,25 +366,6 @@ namespace Project
                         }
                         placepossible = false; //stops it from placing the block
                     }
-                    //else if (rnd.Next(0, 10) > 10 - y)
-                    //{
-                    //    if (y == lastblockY + 1 && maxheight == true) //checks if it is trying to place a block on top of 2 blocks
-                    //    {
-                    //        placepossible = false; //stops it from placing the block
-                    //        maxheight = false;
-                    //    }
-                    //    else if (y == lastblockY + 1) //checks is there is a block below this point
-                    //    {
-                    //        maxheight = true; //the blocks can only be a maximum height of 2 for the player to be able to jump over it, so this is true if the heights of blocks is true
-                    //    }
-
-                    //    if (placepossible) //makes sure the block will be navigatable
-                    //    {
-                    //        Things.Add(new Block(this, BlockSprite, new Vector2(x * size + blockoffsetX, y * size + blockoffsetY), new Rectangle(0, 0, size, size)));
-                    //        lastblockY = y;
-                    //    }
-                    //    placepossible = true;
-                    //}
                     else
                     {
                         lastblockY = -1;
@@ -656,16 +390,14 @@ namespace Project
 
 
             Things.Add(new LevelEnd(this, BubbleSprite, new Vector2(4000, 500), new Rectangle(0, 0, 40, 40))); //change texture from bubbles
-            
-            foreach (var item in Things)
-            {
-                if (item is Block)
-                {
-                    BlockLocations.Add(item);
-                }
-            }
+
         }
 
+        //Add a block to the game
+        private void createBlock(int x, int y)
+        {
+            Things.Add(new Block(this, BlockSprite, new Vector2(x * 64, y * 64), new Rectangle(0, 0, 64, 64)));
+        }
 
         protected override void UnloadContent()
         {
@@ -673,7 +405,6 @@ namespace Project
 
         protected override void Update(GameTime gameTime)
         {
-
             if (Menu || paused || dead || Win)
             {
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -716,17 +447,15 @@ namespace Project
 
             spriteBatch.Begin();
 
-            //spriteBatch.Draw(background1, new Rectangle(0, 0, 1440, 810), Color.White);
-            //spriteBatch.Draw(Texture, Position - Game.Offset, LittleBoundingBox, Color.White);
-
-
             DeadThings = new List<Thing>();
 
+            //update everything
             foreach (var Thing in Things)
             {
                 Thing.Update(gameTime, spriteBatch);
             }
 
+            //remove all the DeadThings from the game
             foreach (var Thing in DeadThings)
             {
                 Things.Remove(Thing);
@@ -735,34 +464,33 @@ namespace Project
             if (level == 4)
             {
                 spriteBatch.Draw(underwatereffect, Vector2.Zero, Color.White);
-
             }
 
             if (paused)
             {
                 if (Player.Controller)
-                    spriteBatch.Draw(PauseOverlayController, Vector2.Zero, Color.White);
+                    spriteBatch.Draw(PauseOverlayController, Vector2.Zero, Color.White); //pause screen controller
                 else
-                    spriteBatch.Draw(PauseOverlay, Vector2.Zero, Color.White);
+                    spriteBatch.Draw(PauseOverlay, Vector2.Zero, Color.White); //pause screen keyboard
             }
-             
+
             if (Menu)
             {
-                spriteBatch.Draw(MenuScreen, Vector2.Zero, Color.White);
+                spriteBatch.Draw(MenuScreen, Vector2.Zero, Color.White); //menu screen
             }
             if (dead)
             {
-                spriteBatch.Draw(DeathScreen, Vector2.Zero, Color.White);
+                spriteBatch.Draw(DeathScreen, Vector2.Zero, Color.White); //death screen
                 paused = false;
             }
             if (Win && count >= 100)
             {
-                spriteBatch.Draw(WinScreen2, Vector2.Zero, Color.White);
+                spriteBatch.Draw(WinScreen2, Vector2.Zero, Color.White); //credits roll
                 paused = false;
             }
             else if (Win)
             {
-                spriteBatch.Draw(WinScreen1, Vector2.Zero, Color.White);
+                spriteBatch.Draw(WinScreen1, Vector2.Zero, Color.White); //win screen
                 paused = false;
             }
 
@@ -770,7 +498,7 @@ namespace Project
 
             base.Draw(gameTime);
 
-        }       
+        }
 
     }
 

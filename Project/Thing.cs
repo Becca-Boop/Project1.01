@@ -30,29 +30,12 @@ namespace Project
             collision = true;
         }
 
-        //public Thing IsColliding(Game Game)
-        //{
-        //    foreach (var Thing in Game.Things)
-        //    {
-        //        if (Thing is Background)
-        //        {
-        //        }
-        //        else
-        //        {
-        //            if (this.IsColliding(Thing))
-        //            {
-        //                return Thing;
-        //            }
-        //        }
-        //    }
-        //    return null;
-        //}
 
         public Thing IsColliding(Game Game)
         {
             foreach (var Thing in Game.Things)
             {
-                if (this.IsColliding(Thing))
+                if (this.IsColliding(Thing)) //if colliding with an object, recieve the object its colliding with
                 {
                     return Thing;
                 }
