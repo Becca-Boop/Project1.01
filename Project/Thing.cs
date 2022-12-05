@@ -103,5 +103,13 @@ namespace Project
             }
         }
 
+        public Vector2 GetNode()
+        {
+            int x = (int)Math.Round((this.position.X - 32) / 64);
+            int y = (int)Math.Round((this.position.Y + 32) / 64);
+            return new Vector2(x, y);
+        }
+
+
     }
 }

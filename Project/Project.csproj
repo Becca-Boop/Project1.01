@@ -48,9 +48,9 @@
     <Compile Include="Flyer.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Ghost.cs" />
-    <Compile Include="GridLocation.cs" />
     <Compile Include="LevelEnd.cs" />
     <Compile Include="NonFlyer.cs" />
+    <Compile Include="PathStep.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

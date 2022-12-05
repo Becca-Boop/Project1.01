@@ -42,6 +42,7 @@ namespace Project
             {
                 BigBoundingBox.X -= (int)move.X;
                 BigBoundingBox.Y -= (int)move.Y;
+                Bump();
                 flag = true;
             }
             else
@@ -60,7 +61,7 @@ namespace Project
             {
                 s = SpriteEffects.None;
             }
-            Console.WriteLine("" + dt + " - " + move.X + ", " + move.Y + " - " + Position.X + ", " + Position.Y + " - " + flag);
+            //Console.WriteLine("" + dt + " - " + move.X + ", " + move.Y + " - " + Position.X + ", " + Position.Y + " - " + flag);
 
             spriteBatch.Draw(Texture, Position - Game.Offset, LittleBoundingBox, Color.White);
         }
@@ -87,6 +88,10 @@ namespace Project
 
             Things.Add(thing);
 
+        }
+
+        public virtual void Bump()
+        {
         }
     }
 }

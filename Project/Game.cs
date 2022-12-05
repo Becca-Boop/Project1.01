@@ -87,6 +87,9 @@ namespace Project
         public int previouslevel;
 
 
+        public HashSet<Vector2> blockedNodes;
+
+
         public Game()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -122,12 +125,12 @@ namespace Project
             }
 
 
-
+            blockedNodes = new HashSet<Vector2>();
 
 
             Random rnd = new Random();
 
-            level = rnd.Next(1, 6);
+            level = 1;//rnd.Next(1, 6);
 
             dead = false;
             Win = false;
@@ -308,7 +311,6 @@ namespace Project
                 enemy2 = NonFlyerEnemy2;
             }
 
-
             for (int x = 0; x < X; x++)
             {
                 int lastblockY = -1;  // at what height was the last block?
@@ -371,6 +373,7 @@ namespace Project
                         lastblockY = -1;
                     }
                 }
+
             }
 
             if (rnd.Next(0, 2) == 0)
@@ -397,6 +400,9 @@ namespace Project
         private void createBlock(int x, int y)
         {
             Things.Add(new Block(this, BlockSprite, new Vector2(x * 64, y * 64), new Rectangle(0, 0, 64, 64)));
+            Vector2 node = new Vector2(x, y);
+            blockedNodes.Add(node);
+            Console.WriteLine(node);
         }
 
         protected override void UnloadContent()
