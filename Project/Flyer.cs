@@ -15,7 +15,7 @@ namespace Project
         private bool flag = true;   // while testing, once pathfind once
 
         static Vector2[] Moves = new Vector2[]
-        // can move in any of eight diurections from the current node (grid square)
+        // can move in any of eight directions from the current node (grid square)
         {
             new Vector2(0, 1),
             new Vector2(1, 1),

@@ -12,7 +12,7 @@ namespace Project
 {
     public class Enemy : Thing
     {
-        public bool ignoreBlocks = false;
+        public bool ignoreBlocks = true;
 
         public Enemy(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
         {
@@ -30,6 +30,7 @@ namespace Project
             if (Game.Menu || Game.paused || Game.dead || Game.Win) return;
 
             float dt = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
             Vector2 move = GetMove(dt);
 
             BigBoundingBox.X += (int)move.X;
