@@ -632,6 +632,24 @@
 /processorParam:TextureFormat=Color
 /build:Tile2.png
 
+#begin tune1.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:tune1.wav
+
+#begin tune2.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:tune2.wav
+
+#begin tune3.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:tune3.wav
+
 #begin underwater.png
 /importer:TextureImporter
 /processor:TextureProcessor

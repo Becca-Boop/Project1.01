@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Project
 {
@@ -39,7 +40,9 @@ namespace Project
         protected Texture2D FlyerEnemy2;
         protected Texture2D NonFlyerEnemy1;
         protected Texture2D NonFlyerEnemy2;
-
+        Song song1;
+        Song song2;
+        Song song3;
 
         //creating arrays for the background images
         private Texture2D[] levelBackgrounds1 = new Texture2D[7];
@@ -153,6 +156,13 @@ namespace Project
             SharkSprite = Content.Load<Texture2D>("shark");
             MonkeySprite = Content.Load<Texture2D>("spacemonkey");
             DogSprite = Content.Load<Texture2D>("spacedog");
+            List<Song> soundEffects = new List<Song>();
+
+            this.song1 = Content.Load<Song>("tune1");
+            this.song2 = Content.Load<Song>("tune2");
+            this.song3 = Content.Load<Song>("tune3");
+
+
 
             //
             for (int i = 1; i < 6; i++)
@@ -499,6 +509,10 @@ namespace Project
                 spriteBatch.Draw(WinScreen1, Vector2.Zero, Color.White); //win screen
                 paused = false;
             }
+            //this.song1 = Content.Load<Song>("prepare");
+            MediaPlayer.Play(song1);
+            MediaPlayer.IsRepeating = true;
+            //MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
 
             spriteBatch.End();
 
