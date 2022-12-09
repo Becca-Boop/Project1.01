@@ -36,6 +36,7 @@ namespace Project
         bool attack = false;
         Texture2D SnowballSprite;
         private float ShotTimer;
+        public float hittime = 0;
 
 
 

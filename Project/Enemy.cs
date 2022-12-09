@@ -12,7 +12,8 @@ namespace Project
 {
     public class Enemy : Thing
     {
-        public bool ignoreBlocks = true;
+        public bool ignoreBlocks = false;
+        float dt = 0;
 
         public Enemy(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
         {
@@ -21,7 +22,12 @@ namespace Project
         public override void Collision(Thing otherThing)
         {
             {
-                Game.Player.health--;
+
+                if (0.05 < dt - Game.Player.hittime)
+                {
+                    Game.Player.health--;
+                    Game.Player.hittime = dt;           
+                }
             }
         }
 
@@ -29,7 +35,8 @@ namespace Project
         {
             if (Game.Menu || Game.paused || Game.dead || Game.Win) return;
 
-            float dt = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            dt = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+           
 
             Vector2 move = GetMove(dt);
 
