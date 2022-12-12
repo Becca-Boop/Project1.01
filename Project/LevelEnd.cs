@@ -28,7 +28,15 @@ namespace Project
         {
             if(!counted)
             {
-                Game.Win = true;
+                if (Game.level == 5)
+                {
+                    Game.Win = true;
+                }
+                else
+                {
+                    Game.level++;
+                    Game.restart = true;
+                }
                 counted = true;
             }
         }

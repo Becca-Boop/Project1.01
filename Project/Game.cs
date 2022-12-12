@@ -86,7 +86,7 @@ namespace Project
         SpriteFont font;
 
         public int frameCount = 0;
-        public int level;
+        public int level = 1;
         public int previouslevel;
 
 
@@ -128,12 +128,17 @@ namespace Project
             }
 
 
+            this.song2 = Content.Load<Song>("tune2");
+            MediaPlayer.Play(song2);
+            MediaPlayer.IsRepeating = true;
+         
+
             blockedNodes = new HashSet<Vector2>();
 
 
             Random rnd = new Random();
 
-            level = 1;//rnd.Next(1, 6);
+            //rnd.Next(1, 6);
 
             dead = false;
             Win = false;
@@ -158,9 +163,9 @@ namespace Project
             DogSprite = Content.Load<Texture2D>("spacedog");
             List<Song> soundEffects = new List<Song>();
 
-            this.song1 = Content.Load<Song>("tune1");
-            this.song2 = Content.Load<Song>("tune2");
-            this.song3 = Content.Load<Song>("tune3");
+            //this.song1 = Content.Load<Song>("tune1");
+            //this.song2 = Content.Load<Song>("tune2");
+            //this.song3 = Content.Load<Song>("tune3");
 
 
 
@@ -321,6 +326,11 @@ namespace Project
                 enemy2 = NonFlyerEnemy2;
             }
 
+            for (int f = 0; f < 13; f++)
+            {
+                Things.Add(new LevelEnd(this, BubbleSprite, new Vector2(4000, (f * 40) + 200), new Rectangle(0, 0, 40, 40))); //change texture from bubbles
+            }
+
             for (int x = 0; x < X; x++)
             {
                 int lastblockY = -1;  // at what height was the last block?
@@ -401,11 +411,9 @@ namespace Project
             Player = new Player(this, PlayerSprite, new Vector2(PlayerposX, PlayerposY), new Rectangle(2, 2, 35, 48), font, snowballSprite);
             Things.Add(Player);
 
-
-            Things.Add(new LevelEnd(this, BubbleSprite, new Vector2(4000, 500), new Rectangle(0, 0, 40, 40))); //change texture from bubbles
-
+            
         }
-
+        
         //Add a block to the game
         private void createBlock(int x, int y)
         {
@@ -510,8 +518,8 @@ namespace Project
                 paused = false;
             }
             //this.song1 = Content.Load<Song>("prepare");
-            MediaPlayer.Play(song1);
-            MediaPlayer.IsRepeating = true;
+            //MediaPlayer.Play(song1);
+            //MediaPlayer.IsRepeating = true;
             //MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
 
             spriteBatch.End();

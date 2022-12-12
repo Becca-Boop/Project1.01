@@ -37,7 +37,6 @@ namespace Project
 
             dt = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
            
-
             Vector2 move = GetMove(dt);
 
             BigBoundingBox.X += (int)move.X;
@@ -46,7 +45,7 @@ namespace Project
             //if (Collider != null) Console.WriteLine("Collided with " + Collider.GetType());
 
             bool flag;
-            if (Collider is Block && !ignoreBlocks)
+            if (Collider is Block)
             {
                 BigBoundingBox.X -= (int)move.X;
                 BigBoundingBox.Y -= (int)move.Y;

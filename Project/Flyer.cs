@@ -29,7 +29,7 @@ namespace Project
 
         public Flyer(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
         {
-            ignoreBlocks = false;
+            ignoreBlocks = true;
         }
 
         public override Vector2 GetMove(float dt)
@@ -75,7 +75,7 @@ namespace Project
                         //Console.WriteLine("Been here before!");
                         continue;   // already been here, no need to do again
                     }
-                    if (!ignoreBlocks && Game.blockedNodes.Contains(newNode))
+                    if (Game.blockedNodes.Contains(newNode))
                     {
                         //Console.WriteLine("Blocked!");
                         continue;   // route blocked this way so abandon
