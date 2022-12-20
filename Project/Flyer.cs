@@ -18,13 +18,13 @@ namespace Project
         // can move in any of eight directions from the current node (grid square)
         {
             new Vector2(0, 1),
-            new Vector2(1, 1),
+            //new Vector2(1, 1),
             new Vector2(1, 0),
-            new Vector2(1, -1),
+            //new Vector2(1, -1),
             new Vector2(0, -1),
-            new Vector2(-1, -1),
+            //new Vector2(-1, -1),
             new Vector2(-1, 0),
-            new Vector2(-1, 1),
+            //new Vector2(-1, 1),
         };
 
         public Flyer(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
@@ -61,7 +61,7 @@ namespace Project
                 pathStepPosition++;
 
                 // move in each of eight directions
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     Vector2 newNode = new Vector2(currentStep.position.X + Moves[i].X, currentStep.position.Y + Moves[i].Y);
                     if (newNode.X == targetNode.X && newNode.Y == targetNode.Y)
