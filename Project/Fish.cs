@@ -15,8 +15,10 @@ namespace Project
         bool counted = false;
 
 
-        public fish(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
+        public fish(Game game, Texture2D _texture, Vector2 _position) : base(game, _texture, new Rectangle(0, 0, 40, 40))
         {
+            Position = _position;
+            BigBoundingBox = new Rectangle(LittleBoundingBox.X + (int)Position.X, LittleBoundingBox.Y + (int)Position.Y, LittleBoundingBox.Width, LittleBoundingBox.Height);
         }
 
         public override void Update(GameTime gameTime, SpriteBatch spriteBatch)

@@ -15,9 +15,10 @@ namespace Project
     {
         protected Texture2D texture;
 
-        public Background(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
+        public Background(Game game, Texture2D _texture, Vector2 _position) : base(game, _texture, new Rectangle(0, 0, 2048, 1500))
         {
             collision = false;
+            Position = _position;
         }
 
         public override void Update(GameTime gameTime, SpriteBatch spriteBatch)

@@ -20,11 +20,10 @@ namespace Project
         public Game Game;
         public bool collision;
 
-        public Thing(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox)
+        public Thing(Game game, Texture2D _texture, Rectangle _boundingBox)
         {
             Game = game;
             Texture = _texture;
-            Position = _position;
             LittleBoundingBox = _boundingBox;
             BigBoundingBox = new Rectangle(LittleBoundingBox.X + (int)Position.X, LittleBoundingBox.Y + (int)Position.Y, LittleBoundingBox.Width, LittleBoundingBox.Height);
             collision = true;
@@ -105,10 +104,27 @@ namespace Project
 
         public Vector2 GetNode()
         {
-            int x = (int)Math.Round((this.position.X - 32) / 64);
-            int y = (int)Math.Round((this.position.Y + 32) / 64);
+            // get centre, divide by 64 to get grid place
+            int x = (int)Math.Floor((this.position.X + this.LittleBoundingBox.Width / 2) / 64);
+            int y = (int)Math.Floor((this.position.Y + this.LittleBoundingBox.Height / 2) / 64);
+            //int x = (int)Math.Round(this.position.X / 64, MidpointRounding.AwayFromZero);
+            //int y = (int)Math.Round(this.position.Y / 64, MidpointRounding.AwayFromZero);
             return new Vector2(x, y);
         }
+
+        public Vector2 GetNodeCoords()
+        {
+            Vector2 v = this.GetNode();
+            return new Vector2(v.X * 64 - this.LittleBoundingBox.Width / 2, v.Y * 64 - this.LittleBoundingBox.Height / 2);
+        }
+
+
+        public bool Centred()
+        {
+            Vector2 v = this.GetNodeCoords();
+            return Math.Abs(v.X - this.Position.X) < 0.1 && Math.Abs(v.Y - this.Position.Y) < 0.1;
+        }
+
 
 
     }

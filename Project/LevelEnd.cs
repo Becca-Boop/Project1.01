@@ -14,8 +14,10 @@ namespace Project
     {
         bool counted = false;
 
-        public LevelEnd(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
+        public LevelEnd(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, new Rectangle(0, 0, 40, 40))
         {
+            Position = _position;
+            BigBoundingBox = new Rectangle(LittleBoundingBox.X + (int)Position.X, LittleBoundingBox.Y + (int)Position.Y, LittleBoundingBox.Width, LittleBoundingBox.Height);
         }
 
         public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
@@ -26,7 +28,7 @@ namespace Project
 
         public override void Collision(Thing otherThing)
         {
-            if(!counted)
+            if (!counted)
             {
                 if (Game.level == 5)
                 {

@@ -14,19 +14,26 @@ namespace Project
     {
         public bool ignoreBlocks = false;
         float dt = 0;
+        float tt = 0;
 
-        public Enemy(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
+        public Enemy(Game game, Texture2D _texture) : base(game, _texture, new Rectangle(0, 0, 40, 40))
         {
+        }
+
+        public void setPosition(Vector2 _position)
+        {
+            this.Position = _position;
+            BigBoundingBox = new Rectangle(LittleBoundingBox.X + (int)Position.X, LittleBoundingBox.Y + (int)Position.Y, LittleBoundingBox.Width, LittleBoundingBox.Height);
         }
 
         public override void Collision(Thing otherThing)
         {
             {
 
-                if (0.05 < dt - Game.Player.hittime)
+                if (1000 < tt - Game.Player.hittime)
                 {
                     Game.Player.health--;
-                    Game.Player.hittime = dt;           
+                    Game.Player.hittime = tt;
                 }
             }
         }
@@ -36,7 +43,8 @@ namespace Project
             if (Game.Menu || Game.paused || Game.dead || Game.Win) return;
 
             dt = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-           
+            tt = (float)gameTime.TotalGameTime.TotalMilliseconds;
+
             Vector2 move = GetMove(dt);
 
             BigBoundingBox.X += (int)move.X;
@@ -44,12 +52,14 @@ namespace Project
             Thing Collider = this.IsColliding(Game);
             //if (Collider != null) Console.WriteLine("Collided with " + Collider.GetType());
 
+            //Game.message("Collided with " + (Collider == null ? "nothing" : Collider.GetType().ToString()));
+
             bool flag;
             if (Collider is Block)
             {
                 BigBoundingBox.X -= (int)move.X;
                 BigBoundingBox.Y -= (int)move.Y;
-                Bump();
+                this.Bump();
                 flag = true;
             }
             else
@@ -99,6 +109,7 @@ namespace Project
 
         public virtual void Bump()
         {
+            Console.WriteLine("default bmp");
         }
     }
 }

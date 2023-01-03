@@ -15,7 +15,7 @@ namespace Project
         int div = 7;
         int dir = 0;
 
-        public NonFlyer(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
+        public NonFlyer(Game game, Texture2D _texture) : base(game, _texture)
         {
         }
 

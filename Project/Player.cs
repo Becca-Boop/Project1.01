@@ -47,7 +47,7 @@ namespace Project
         string debug;
 
 
-        public Player(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox, SpriteFont _font, Texture2D _snowball) : base(game, _texture, _position, _boundingBox)
+        public Player(Game game, Texture2D _texture, Vector2 _position, SpriteFont _font, Texture2D _snowball) : base(game, _texture, new Rectangle(2, 2, 35, 48))
         {
             health = 4;
             Game.paused = false;
@@ -55,10 +55,18 @@ namespace Project
             score = 0;
             font = _font;
             SnowballSprite = _snowball;
+            Position = _position;
         }
 
         public override void Update(GameTime gameTime, SpriteBatch spriteBatch)
         {
+
+
+
+            BigBoundingBox = new Rectangle(LittleBoundingBox.X + (int)Position.X, LittleBoundingBox.Y + (int)Position.Y, LittleBoundingBox.Width, LittleBoundingBox.Height);
+
+
+
 
             if (!Game.Menu && !Game.paused && !Game.dead && !Game.Win && Game.level == 4)
             {
@@ -306,7 +314,7 @@ namespace Project
                     debug += Collider;
                 }
 
-                //if (Collider != null) debug += " hit=" + Collider.GetType();
+                if (Collider != null) debug += " hit=" + Collider.GetType();
 
                 // Now draw it
                 sourceRect = new Rectangle(42 * frames, 0, 42, 60);
@@ -315,12 +323,13 @@ namespace Project
             spriteBatch.Draw(Texture, CENTRE, sourceRect, Color.White);
             spriteBatch.DrawString(font, "SCORE:  " + score, new Vector2(100, 700), Color.White);
             spriteBatch.DrawString(font, "HEALTH:  " + health, new Vector2(1200, 700), Color.White);
+            spriteBatch.DrawString(font, "P:  " + this.GetNode().ToString(), new Vector2(800, 600), Color.White);
 
             foreach (var thisthing in Game.Things)
             {
                 if (thisthing is NonFlyer)
                 {
-                    // debug += thisthing.Position.X + "    ";
+                    debug += thisthing.Position.X + "    ";
                 }
 
             }

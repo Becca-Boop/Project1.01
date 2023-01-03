@@ -13,6 +13,7 @@ namespace Project
     class Flyer : Enemy
     {
         private bool flag = true;   // while testing, once pathfind once
+        private int state = 0;
 
         static Vector2[] Moves = new Vector2[]
         // can move in any of eight directions from the current node (grid square)
@@ -27,27 +28,57 @@ namespace Project
             //new Vector2(-1, 1),
         };
 
-        public Flyer(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
+        public Flyer(Game game, Texture2D _texture) : base(game, _texture)
         {
-            ignoreBlocks = true;
+            ignoreBlocks = false;
         }
 
         public override Vector2 GetMove(float dt)
         {
-            Vector2 moveDir = Position - Game.Player.Position;
             //Console.WriteLine("Path finding!");
 
 
-            HashSet<Vector2> visitedNodes = new HashSet<Vector2>();
-            List<PathStep> steps = new List<PathStep>();
             Vector2 startingNode = this.GetNode();
             Vector2 targetNode = Game.Player.GetNode();
-            PathStep playerFound = null;
             if (startingNode == targetNode)
             {
                 Console.WriteLine("Already with the player!");
-                playerFound = new PathStep(null, startingNode);
+                this.state = 3;
+                //playerFound = new PathStep(null, startingNode);
+
+                Vector2 moveDir = Position - Game.Player.Position;
+                moveDir.Normalize();
+                float distance = Vector2.Distance(Position, Game.Player.Position);
+
+                Vector2 moveVector = new Vector2(-moveDir.X * dt / 10, -moveDir.Y * dt / 10);
+                Game.message("At the player");
+                return moveVector;
             }
+
+
+            if (this.state == 0)
+            {
+                // Move to centre of grid so we can path find
+
+                if (this.Centred())
+                {
+                    this.state = 1;
+                }
+                else
+                {
+                    Vector2 moveDir = Position - this.GetNodeCoords();
+                    moveDir.Normalize();
+                    float distance = Vector2.Distance(Position, Game.Player.Position);
+
+                    Vector2 moveVector = new Vector2(-moveDir.X * dt / 10, -moveDir.Y * dt / 10);
+                    Game.message("Aligning");
+                    return moveVector;
+                }
+            }
+
+            HashSet<Vector2> visitedNodes = new HashSet<Vector2>();
+            List<PathStep> steps = new List<PathStep>();
+            PathStep playerFound = null;
             visitedNodes.Add(startingNode);
             steps.Add(new PathStep(null, startingNode));
             int pathStepPosition = 0;
@@ -118,22 +149,31 @@ namespace Project
                 Console.WriteLine(startingNode);
                 Console.WriteLine(targetNode);
             }
-            Console.WriteLine(count);
+            //Console.WriteLine(count);
 
-            if (firstStep == new Vector2(0, 0)) return new Vector2(0, 0);
-            moveDir = startingNode - firstStep;
+            if (firstStep == new Vector2(0, 0))
+            {
+                return new Vector2(0, 0);
+            }
+            else
+            {
+                Vector2 moveDir = startingNode - firstStep;
+                Game.message(startingNode.ToString() + "->" + firstStep.ToString() + " ... " + this.Position.ToString());
 
-            moveDir.Normalize();
-            float distance = Vector2.Distance(Position, Game.Player.Position);
+                moveDir.Normalize();
+                float distance = Vector2.Distance(Position, Game.Player.Position);
 
-            Vector2 moveVector = new Vector2(-moveDir.X * dt / 10, -moveDir.Y * dt / 10);
-            return moveVector;
+                Vector2 moveVector = new Vector2(-moveDir.X * dt / 10, -moveDir.Y * dt / 10);
+                return moveVector;
+
+            }
         }
 
 
-        public virtual void Bump()
+        public override void Bump()
         {
             Console.WriteLine("F-Bump");
+            this.state = 0;
         }
 
     }

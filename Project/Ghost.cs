@@ -12,7 +12,7 @@ namespace Project
 {
     class Ghost : Flyer
     {
-        public Ghost(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, _position, _boundingBox)
+        public Ghost(Game game, Texture2D _texture) : base(game, _texture)
         {
             ignoreBlocks = true;
         }

@@ -129,9 +129,9 @@ namespace Project
 
 
             this.song2 = Content.Load<Song>("tune2");
-            MediaPlayer.Play(song2);
+            //MediaPlayer.Play(song2);
             MediaPlayer.IsRepeating = true;
-         
+
 
             blockedNodes = new HashSet<Vector2>();
 
@@ -163,6 +163,14 @@ namespace Project
             DogSprite = Content.Load<Texture2D>("spacedog");
             List<Song> soundEffects = new List<Song>();
 
+
+            Enemy[] Enemies1 = new Enemy[] { null, new Flyer(this, PuffinSprite), new NonFlyer(this, KangarooSprite), new NonFlyer(this, RatSprite), new Flyer(this, JellyfishSprite), new Flyer(this, MonkeySprite) };
+            Enemy[] Enemies2 = new Enemy[] { null, new NonFlyer(this, SealSprite), new NonFlyer(this, WombatSprite), new NonFlyer(this, SpiderSprite), new Flyer(this, SharkSprite), new NonFlyer(this, DogSprite) };
+
+            Enemy enemy1 = Enemies1[level];
+            Enemy enemy2 = Enemies1[level];
+
+
             //this.song1 = Content.Load<Song>("tune1");
             //this.song2 = Content.Load<Song>("tune2");
             //this.song3 = Content.Load<Song>("tune3");
@@ -176,11 +184,11 @@ namespace Project
                 levelBackgrounds2[i] = Content.Load<Texture2D>("Background" + (i * 3 - 1));
                 levelBackgrounds3[i] = Content.Load<Texture2D>("Background" + (i * 3));
             }
-            Things.Add(new Background(this, levelBackgrounds1[level], new Vector2(-500, -300), new Rectangle(0, 0, 2048, 1500)));
+            Things.Add(new Background(this, levelBackgrounds1[level], new Vector2(-500, -300)));
 
-            Things.Add(new Background(this, levelBackgrounds2[level], new Vector2(1548, -300), new Rectangle(0, 0, 2048, 1500)));
+            Things.Add(new Background(this, levelBackgrounds2[level], new Vector2(1548, -300)));
 
-            Things.Add(new Background(this, levelBackgrounds3[level], new Vector2(3596, -300), new Rectangle(0, 0, 2048, 1500)));
+            Things.Add(new Background(this, levelBackgrounds3[level], new Vector2(3596, -300)));
 
             PauseOverlay = Content.Load<Texture2D>("Pause Menu");
             PauseOverlayController = Content.Load<Texture2D>("Pause Menu Controller");
@@ -205,41 +213,7 @@ namespace Project
 
 
 
-            if (level == 1)
-            {
-                FlyerEnemy1 = PuffinSprite;
-                FlyerEnemy2 = null;
-                NonFlyerEnemy1 = SealSprite;
-                NonFlyerEnemy2 = null;
-            }
-            else if (level == 2)
-            {
-                FlyerEnemy1 = null;
-                FlyerEnemy2 = null;
-                NonFlyerEnemy1 = KangarooSprite;
-                NonFlyerEnemy2 = WombatSprite;
-            }
-            else if (level == 3)
-            {
-                FlyerEnemy1 = null;
-                FlyerEnemy2 = null;
-                NonFlyerEnemy1 = RatSprite;
-                NonFlyerEnemy2 = SpiderSprite;
-            }
-            else if (level == 4)
-            {
-                FlyerEnemy1 = JellyfishSprite;
-                FlyerEnemy2 = SharkSprite;
-                NonFlyerEnemy1 = null;
-                NonFlyerEnemy2 = null;
-            }
-            else if (level == 5)
-            {
-                FlyerEnemy1 = MonkeySprite;
-                FlyerEnemy2 = DogSprite;
-                NonFlyerEnemy1 = null;
-                NonFlyerEnemy2 = null;
-            }
+
 
 
             if (level != 4)
@@ -288,43 +262,15 @@ namespace Project
 
 
             int size = 64;
-            int X = 64;
+            int X = 10;// 64;
             int Y;
             if (level == 4)
                 Y = 8;
             else
                 Y = 12;
 
-            Texture2D enemy1 = null;
-            Texture2D enemy2 = null;
 
 
-            if (FlyerEnemy1 != null)
-            {
-                enemy1 = FlyerEnemy1;
-            }
-            else if (FlyerEnemy2 != null)
-            {
-                enemy1 = FlyerEnemy2;
-            }
-            else if (NonFlyerEnemy1 != null)
-            {
-                enemy1 = NonFlyerEnemy1;
-            }
-
-
-            if (FlyerEnemy2 != null && enemy1 != FlyerEnemy2)
-            {
-                enemy2 = FlyerEnemy2;
-            }
-            else if (NonFlyerEnemy1 != null && enemy1 != NonFlyerEnemy1)
-            {
-                enemy2 = NonFlyerEnemy1;
-            }
-            else if (NonFlyerEnemy2 != null)
-            {
-                enemy2 = NonFlyerEnemy2;
-            }
 
             for (int f = 0; f < 13; f++)
             {
@@ -367,24 +313,24 @@ namespace Project
                     {
                         if (level == 4 && rnd.Next(0, 2) == 1)
                         {
-                            Things.Add(new Bubbles(this, BubbleSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
+                            Things.Add(new Bubbles(this, BubbleSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY)));
                         }
                         else if (rnd.Next(0, 3) == 1)
                         {
                             if (rnd.Next(0, 2) == 0)
                             {
-                                if (enemy1 == NonFlyerEnemy1)
-                                    Things.Add(new NonFlyer(this, enemy1, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
+                                Things.Add(enemy1);
+                                enemy1.setPosition(new Vector2(x * size + fishoffsetX, y * size + fishoffsetY));
                             }
                             else
                             {
-                                if (enemy2 != FlyerEnemy2)
-                                    Things.Add(new NonFlyer(this, enemy2, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
+                                //Things.Add(enemy2);
+                                enemy2.setPosition(new Vector2(x * size + fishoffsetX, y * size + fishoffsetY));
                             }
                         }
                         else
                         {
-                            Things.Add(new fish(this, fishSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY), new Rectangle(0, 0, 40, 40)));
+                            Things.Add(new fish(this, fishSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY)));
                         }
                         placepossible = false; //stops it from placing the block
                     }
@@ -398,29 +344,29 @@ namespace Project
 
             if (rnd.Next(0, 2) == 0)
             {
-                if (enemy1 != NonFlyerEnemy1)
-                    Things.Add(new Flyer(this, enemy1, new Vector2(rnd.Next(0, 8) * size, rnd.Next(0, 12) * size), new Rectangle(0, 0, 40, 40)));
+                Things.Add(enemy1);
             }
             else
             {
-                if (enemy2 == FlyerEnemy2)
-                    Things.Add(new Flyer(this, enemy2, new Vector2(rnd.Next(0, 8) * size, rnd.Next(0, 12) * size), new Rectangle(0, 0, 40, 40)));
+                Things.Add(enemy2);
             }
 
 
-            Player = new Player(this, PlayerSprite, new Vector2(PlayerposX, PlayerposY), new Rectangle(2, 2, 35, 48), font, snowballSprite);
+            Player = new Player(this, PlayerSprite, new Vector2(PlayerposX, PlayerposY), font, snowballSprite);
             Things.Add(Player);
 
-            
+
         }
-        
+
         //Add a block to the game
         private void createBlock(int x, int y)
         {
-            Things.Add(new Block(this, BlockSprite, new Vector2(x * 64, y * 64), new Rectangle(0, 0, 64, 64)));
-            Vector2 node = new Vector2(x, y);
-            blockedNodes.Add(node);
-            Console.WriteLine(node);
+            //Console.WriteLine(">" + x + ", " + y);
+            Block block = new Block(this, BlockSprite, new Vector2(x * 64, y * 64));
+            Things.Add(block);
+            //Vector2 node = new Vector2(x, y + 1);
+            blockedNodes.Add(block.GetNode());
+            Console.WriteLine(block.GetNode().ToString() + " ... " + block.Position.ToString());
         }
 
         protected override void UnloadContent()
@@ -463,7 +409,10 @@ namespace Project
             }
         }
 
-
+        public void message(string s)
+        {
+            spriteBatch.DrawString(font, "DEBUG:  " + s, new Vector2(100, 750), Color.White);
+        }
 
         protected override void Draw(GameTime gameTime)
         {
