@@ -115,9 +115,8 @@ namespace Project
         public Vector2 GetNodeCoords()
         {
             Vector2 v = this.GetNode();
-            return new Vector2(v.X * 64 - this.LittleBoundingBox.Width / 2, v.Y * 64 - this.LittleBoundingBox.Height / 2);
+            return new Vector2(v.X * 64, v.Y * 64);
         }
-
 
         public bool Centred()
         {

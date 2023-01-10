@@ -317,14 +317,14 @@ namespace Project
                         }
                         else if (rnd.Next(0, 3) == 1)
                         {
-                            if (rnd.Next(0, 2) == 0)
+                            if (rnd.Next(0, 1) == 0)
                             {
                                 Things.Add(enemy1);
                                 enemy1.setPosition(new Vector2(x * size + fishoffsetX, y * size + fishoffsetY));
                             }
                             else
                             {
-                                //Things.Add(enemy2);
+                                Things.Add(enemy2);
                                 enemy2.setPosition(new Vector2(x * size + fishoffsetX, y * size + fishoffsetY));
                             }
                         }
