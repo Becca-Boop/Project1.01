@@ -129,7 +129,7 @@ namespace Project
 
 
             this.song2 = Content.Load<Song>("tune2");
-            //MediaPlayer.Play(song2);
+            //MediaPlayer.Play(song2); UNCOMMENTTOPLAYSONG
             MediaPlayer.IsRepeating = true;
 
 
