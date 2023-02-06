@@ -150,6 +150,7 @@ namespace Project
             BlockSprite = Content.Load<Texture2D>("block" + level);
             fishSprite = Content.Load<Texture2D>("fish");
             BubbleSprite = Content.Load<Texture2D>("Bubbles");
+
             PuffinSprite = Content.Load<Texture2D>("puffinplaceholder");
             SealSprite = Content.Load<Texture2D>("Seal");
             KangarooSprite = Content.Load<Texture2D>("kangaroo");
@@ -167,8 +168,8 @@ namespace Project
             Enemy[] Enemies1 = new Enemy[] { null, new Flyer(this, PuffinSprite), new NonFlyer(this, KangarooSprite), new NonFlyer(this, RatSprite), new Flyer(this, JellyfishSprite), new Flyer(this, MonkeySprite) };
             Enemy[] Enemies2 = new Enemy[] { null, new NonFlyer(this, SealSprite), new NonFlyer(this, WombatSprite), new NonFlyer(this, SpiderSprite), new Flyer(this, SharkSprite), new NonFlyer(this, DogSprite) };
 
-            Enemy enemy1 = Enemies1[level];
-            Enemy enemy2 = Enemies1[level];
+
+
 
 
             //this.song1 = Content.Load<Song>("tune1");
@@ -262,7 +263,7 @@ namespace Project
 
 
             int size = 64;
-            int X = 10;// 64;
+            int X = 64;
             int Y;
             if (level == 4)
                 Y = 8;
@@ -315,19 +316,6 @@ namespace Project
                         {
                             Things.Add(new Bubbles(this, BubbleSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY)));
                         }
-                        else if (rnd.Next(0, 3) == 1)
-                        {
-                            if (rnd.Next(0, 1) == 0)
-                            {
-                                Things.Add(enemy1);
-                                enemy1.setPosition(new Vector2(x * size + fishoffsetX, y * size + fishoffsetY));
-                            }
-                            else
-                            {
-                                Things.Add(enemy2);
-                                enemy2.setPosition(new Vector2(x * size + fishoffsetX, y * size + fishoffsetY));
-                            }
-                        }
                         else
                         {
                             Things.Add(new fish(this, fishSprite, new Vector2(x * size + fishoffsetX, y * size + fishoffsetY)));
@@ -342,13 +330,33 @@ namespace Project
 
             }
 
-            if (rnd.Next(0, 2) == 0)
+
+            for (int i = 0; i < 1; i++)
             {
+                int x;
+                int y;
+                Vector2 v;
+                do
+                {
+                    x = rnd.Next(X);
+                    y = rnd.Next(Y);
+                    v = new Vector2(x, y);
+                } while (blockedNodes.Contains(v));
+                Enemy enemy1 = this.CreateEnemy1(level);
                 Things.Add(enemy1);
-            }
-            else
-            {
+                enemy1.setPosition(new Vector2(x * size + fishoffsetX, y * size + fishoffsetY));
+
+                do
+                {
+                    x = rnd.Next(X);
+                    y = rnd.Next(Y);
+                    v = new Vector2(x, y);
+                } while (blockedNodes.Contains(v));
+                Enemy enemy2 = this.CreateEnemy2(level);
                 Things.Add(enemy2);
+                enemy2.setPosition(new Vector2(x * size + fishoffsetX, y * size + fishoffsetY));
+
+
             }
 
 
@@ -357,6 +365,25 @@ namespace Project
 
 
         }
+
+
+        private Enemy CreateEnemy1(int level)
+        {
+            Enemy[] Enemies1 = new Enemy[] { null, new Flyer(this, PuffinSprite), new NonFlyer(this, KangarooSprite), new NonFlyer(this, RatSprite), new Flyer(this, JellyfishSprite), new Flyer(this, MonkeySprite) };
+
+            return Enemies1[level];
+        }
+
+        private Enemy CreateEnemy2(int level)
+        {
+            Enemy[] Enemies2 = new Enemy[] { null, new NonFlyer(this, SealSprite), new NonFlyer(this, WombatSprite), new NonFlyer(this, SpiderSprite), new Flyer(this, SharkSprite), new NonFlyer(this, DogSprite) };
+
+            return Enemies2[level];
+        }
+
+
+
+
 
         //Add a block to the game
         private void createBlock(int x, int y)
@@ -375,6 +402,12 @@ namespace Project
 
         protected override void Update(GameTime gameTime)
         {
+
+            if (restart)
+            {
+                LoadContent();
+
+            }
             if (Menu || paused || dead || Win)
             {
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))

@@ -12,7 +12,6 @@ namespace Project
 {
     class LevelEnd : Thing
     {
-        bool counted = false;
 
         public LevelEnd(Game game, Texture2D _texture, Vector2 _position, Rectangle _boundingBox) : base(game, _texture, new Rectangle(0, 0, 40, 40))
         {
@@ -28,7 +27,7 @@ namespace Project
 
         public override void Collision(Thing otherThing)
         {
-            if (!counted)
+            if (!Game.Player.levelEnded)
             {
                 if (Game.level == 5)
                 {
@@ -36,10 +35,11 @@ namespace Project
                 }
                 else
                 {
+                    Console.WriteLine("Ending...");
                     Game.level++;
                     Game.restart = true;
                 }
-                counted = true;
+                Game.Player.levelEnded = true;
             }
         }
     }

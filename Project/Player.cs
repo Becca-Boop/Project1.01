@@ -37,6 +37,7 @@ namespace Project
         Texture2D SnowballSprite;
         private float ShotTimer;
         public float hittime = 0;
+        public bool levelEnded = false;
 
 
 
@@ -51,7 +52,7 @@ namespace Project
         {
             health = 4;
             Game.paused = false;
-            Game.restart = true;
+            //Game.restart = true;
             score = 0;
             font = _font;
             SnowballSprite = _snowball;

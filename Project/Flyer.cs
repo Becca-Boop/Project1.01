@@ -1,12 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project
 {
@@ -75,14 +70,12 @@ namespace Project
                     return moveVector;
                 }
             }
-
             HashSet<Vector2> visitedNodes = new HashSet<Vector2>();
             List<PathStep> steps = new List<PathStep>();
             PathStep playerFound = null;
             visitedNodes.Add(startingNode);
             steps.Add(new PathStep(null, startingNode));
             int pathStepPosition = 0;
-
 
             while (pathStepPosition < steps.Count && playerFound == null)
             {
@@ -113,9 +106,7 @@ namespace Project
                     }
                     steps.Add(new PathStep(currentStep, newNode));
                     visitedNodes.Add(newNode);
-
                 }
-
             }
 
             if (playerFound == null)
@@ -123,9 +114,6 @@ namespace Project
                 Console.WriteLine("Pathing failed!");
                 return new Vector2(0, 0);
             }
-
-
-
 
             Vector2 firstStep = new Vector2(0, 0);
             PathStep checker = playerFound;
@@ -165,14 +153,12 @@ namespace Project
 
                 Vector2 moveVector = new Vector2(-moveDir.X * dt / 10, -moveDir.Y * dt / 10);
                 return moveVector;
-
             }
         }
 
 
         public override void Bump()
         {
-            Console.WriteLine("F-Bump");
             this.state = 0;
         }
 
