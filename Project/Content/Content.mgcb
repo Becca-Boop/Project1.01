@@ -193,6 +193,18 @@
 /processorParam:TextureFormat=Color
 /build:Background9.jpg
 
+#begin balloons.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:balloons.png
+
 #begin block1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -277,6 +289,18 @@
 /processorParam:TextureFormat=Color
 /build:Bubbles.png
 
+#begin D:/Bex/Pew Pew Science Project/Assets/Enemies/starfish.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:D:/Bex/Pew Pew Science Project/Assets/Enemies/starfish.png;starfish.png
+
 #begin Death screen.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -344,7 +368,7 @@
 /processorParam:TextureFormat=Color
 /build:jellyfish.png
 
-#begin Kangaroo.png
+#begin kangaroo.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -354,7 +378,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Kangaroo.png
+/build:kangaroo.png
 
 #begin Menu Screen.jpg
 /importer:TextureImporter
@@ -464,6 +488,18 @@
 /processorParam:TextureFormat=Color
 /build:Pause Menu.png
 
+#begin puffin.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:puffin.png
+
 #begin puffinplaceholder.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -500,7 +536,7 @@
 /processorParam:TextureFormat=Color
 /build:red.png
 
-#begin Seal.png
+#begin seal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -510,7 +546,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Seal.png
+/build:seal.png
 
 #begin shark.png
 /importer:TextureImporter

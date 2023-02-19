@@ -29,7 +29,6 @@ namespace Project
         public override void Collision(Thing otherThing)
         {
             {
-
                 if (1000 < tt - Game.Player.hittime)
                 {
                     Game.Player.health--;
@@ -95,9 +94,11 @@ namespace Project
             do
             {
                 thing.BigBoundingBox.X = rnd.Next(0, 8) * size;
-                thing.BigBoundingBox.X = rnd.Next(0, 8) * size;
+                thing.BigBoundingBox.Y = rnd.Next(0, 8) * size;
                 collider = thing.IsColliding(game);
-            } while (collider != null);
+            }
+            while (collider != null)            ;
+
             thing.Position.X = thing.BigBoundingBox.X;
             thing.Position.Y = thing.BigBoundingBox.Y;
 
@@ -109,7 +110,7 @@ namespace Project
 
         public virtual void Bump()
         {
-            Console.WriteLine("default bmp");
+            Console.WriteLine("default bump");
         }
     }
 }

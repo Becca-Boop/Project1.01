@@ -24,6 +24,7 @@ namespace Project
         protected Texture2D BlockSprite;
         protected Texture2D fishSprite;
         protected Texture2D BubbleSprite;
+        protected Texture2D BalloonSprite;
         protected Texture2D EmptySprite;
         protected Texture2D PuffinSprite;
         protected Texture2D SealSprite;
@@ -129,7 +130,7 @@ namespace Project
 
 
             this.song2 = Content.Load<Song>("tune2");
-            //MediaPlayer.Play(song2); UNCOMMENTTOPLAYSONG
+            MediaPlayer.Play(song2); 
             MediaPlayer.IsRepeating = true;
 
 
@@ -150,9 +151,11 @@ namespace Project
             BlockSprite = Content.Load<Texture2D>("block" + level);
             fishSprite = Content.Load<Texture2D>("fish");
             BubbleSprite = Content.Load<Texture2D>("Bubbles");
+            BalloonSprite = Content.Load<Texture2D>("balloons");
 
-            PuffinSprite = Content.Load<Texture2D>("puffinplaceholder");
-            SealSprite = Content.Load<Texture2D>("Seal");
+
+            PuffinSprite = Content.Load<Texture2D>("puffin");
+            SealSprite = Content.Load<Texture2D>("seal");
             KangarooSprite = Content.Load<Texture2D>("kangaroo");
             WombatSprite = Content.Load<Texture2D>("wombat");
             RatSprite = Content.Load<Texture2D>("rat");
@@ -166,7 +169,7 @@ namespace Project
 
 
             Enemy[] Enemies1 = new Enemy[] { null, new Flyer(this, PuffinSprite), new NonFlyer(this, KangarooSprite), new NonFlyer(this, RatSprite), new Flyer(this, JellyfishSprite), new Flyer(this, MonkeySprite) };
-            Enemy[] Enemies2 = new Enemy[] { null, new NonFlyer(this, SealSprite), new NonFlyer(this, WombatSprite), new NonFlyer(this, SpiderSprite), new Flyer(this, SharkSprite), new NonFlyer(this, DogSprite) };
+            Enemy[] Enemies2 = new Enemy[] { null, new NonFlyer(this, SealSprite), new NonFlyer(this, WombatSprite), new NonFlyer(this, SpiderSprite), new Flyer(this, SharkSprite), new Flyer(this, DogSprite) };
 
 
 
@@ -275,7 +278,7 @@ namespace Project
 
             for (int f = 0; f < 13; f++)
             {
-                Things.Add(new LevelEnd(this, BubbleSprite, new Vector2(4000, (f * 40) + 200), new Rectangle(0, 0, 40, 40))); //change texture from bubbles
+                Things.Add(new LevelEnd(this, BalloonSprite, new Vector2(4000, (f * 40) + 200), new Rectangle(0, 0, 40, 40))); //change texture from bubbles
             }
 
             for (int x = 0; x < X; x++)
