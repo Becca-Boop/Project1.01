@@ -33,7 +33,6 @@ namespace Project
         protected Texture2D RatSprite;
         protected Texture2D SpiderSprite;
         protected Texture2D JellyfishSprite;
-        protected Texture2D StarfishSprite;
         protected Texture2D SharkSprite;
         protected Texture2D MonkeySprite;
         protected Texture2D DogSprite;
@@ -161,7 +160,6 @@ namespace Project
             RatSprite = Content.Load<Texture2D>("rat");
             SpiderSprite = Content.Load<Texture2D>("spider");
             JellyfishSprite = Content.Load<Texture2D>("jellyfish");
-            StarfishSprite = Content.Load<Texture2D>("starfish");
             SharkSprite = Content.Load<Texture2D>("shark");
             MonkeySprite = Content.Load<Texture2D>("spacemonkey");
             DogSprite = Content.Load<Texture2D>("spacedog");
@@ -173,15 +171,6 @@ namespace Project
 
 
 
-
-
-            //this.song1 = Content.Load<Song>("tune1");
-            //this.song2 = Content.Load<Song>("tune2");
-            //this.song3 = Content.Load<Song>("tune3");
-
-
-
-            //
             for (int i = 1; i < 6; i++)
             {
                 levelBackgrounds1[i] = Content.Load<Texture2D>("Background" + (i * 3 - 2));
@@ -447,7 +436,7 @@ namespace Project
 
         public void message(string s)
         {
-            spriteBatch.DrawString(font, "DEBUG:  " + s, new Vector2(100, 750), Color.White);
+            //spriteBatch.DrawString(font, "DEBUG:  " + s, new Vector2(100, 750), Color.White);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -502,10 +491,7 @@ namespace Project
                 spriteBatch.Draw(WinScreen1, Vector2.Zero, Color.White); //win screen
                 paused = false;
             }
-            //this.song1 = Content.Load<Song>("prepare");
-            //MediaPlayer.Play(song1);
-            //MediaPlayer.IsRepeating = true;
-            //MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
+
 
             spriteBatch.End();
 
