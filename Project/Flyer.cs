@@ -7,22 +7,18 @@ namespace Project
 {
     class Flyer : Enemy
     {
-        private bool flag = true;   // while testing, once pathfind once
+        private bool flag = true; // for testing
         private int state = 0;
         int count = 0;
         int count2 = 0;
 
         static Vector2[] Moves = new Vector2[]
-        // can move in any of eight directions from the current node (grid square)
+        // can move in any of four directions from the current node (grid square)
         {
             new Vector2(0, 1),
-            //new Vector2(1, 1),
             new Vector2(1, 0),
-            //new Vector2(1, -1),
             new Vector2(0, -1),
-            //new Vector2(-1, -1),
             new Vector2(-1, 0),
-            //new Vector2(-1, 1),
         };
 
         public Flyer(Game game, Texture2D _texture) : base(game, _texture)
@@ -91,7 +87,7 @@ namespace Project
                     //Console.WriteLine(currentStep.position);
                     pathStepPosition++;
 
-                    // move in each of eight directions
+                    // move in each of four directions
                     for (int i = 0; i < 4; i++)
                     {
                         Vector2 newNode = new Vector2(currentStep.position.X + Moves[i].X, currentStep.position.Y + Moves[i].Y);
@@ -119,7 +115,7 @@ namespace Project
                 if (playerFound == null)
                 {
                     Console.WriteLine("Pathing failed!");
-                    return new Vector2(0, 0);
+                    return new Vector2(0, 0); // don't move
                 }
 
                 Vector2 firstStep = new Vector2(0, 0);
@@ -136,14 +132,14 @@ namespace Project
                     count++;
                 }
 
-                if (flag)
-                {
-                    flag = false;
-                    Console.WriteLine(position);
-                    Console.WriteLine(Game.Player.position);
-                    Console.WriteLine(startingNode);
-                    Console.WriteLine(targetNode);
-                }
+                //if (flag)
+                //{
+                //    flag = false;
+                //    Console.WriteLine(position);
+                //    Console.WriteLine(Game.Player.position);
+                //    Console.WriteLine(startingNode);
+                //    Console.WriteLine(targetNode);
+                //}
                 //Console.WriteLine(count);
 
                 if (firstStep == new Vector2(0, 0))

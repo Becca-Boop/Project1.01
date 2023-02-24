@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
@@ -324,7 +325,7 @@ namespace Project
             spriteBatch.Draw(Texture, CENTRE, sourceRect, Color.White);
             spriteBatch.DrawString(font, "SCORE:  " + score, new Vector2(100, 700), Color.White);
             spriteBatch.DrawString(font, "HEALTH:  " + health, new Vector2(1200, 700), Color.White);
-            //spriteBatch.DrawString(font, "P:  " + this.GetNode().ToString(), new Vector2(800, 600), Color.White);
+            spriteBatch.DrawString(font, "P:  " + this.GetNode().ToString(), new Vector2(800, 600), Color.White);
 
             foreach (var thisthing in Game.Things)
             {
