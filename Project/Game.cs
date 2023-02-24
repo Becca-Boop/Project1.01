@@ -447,7 +447,7 @@ namespace Project
 
         public void message(string s)
         {
-            spriteBatch.DrawString(font, "DEBUG:  " + s, new Vector2(100, 750), Color.White);
+            //spriteBatch.DrawString(font, "DEBUG:  " + s, new Vector2(100, 750), Color.White);
         }
 
         protected override void Draw(GameTime gameTime)
