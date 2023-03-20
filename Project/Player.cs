@@ -181,7 +181,7 @@ namespace Project
                     Collider.Collision(this);
                 }
 
-                if (Collider is Flyer)
+                if (Collider is Enemy)
                 {
                     health--;
                 }
