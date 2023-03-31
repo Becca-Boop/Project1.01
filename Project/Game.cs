@@ -138,7 +138,6 @@ namespace Project
 
             Random rnd = new Random();
 
-            //rnd.Next(1, 6);
 
             dead = false;
             Win = false;
